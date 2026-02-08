@@ -1,31 +1,50 @@
-# Voxeprint - Calculadora de Impresión 3D
+#  Voxeprint - 3D Printing Cost Calculator
 
-Calculadora profesional para generar presupuestos de impresión 3D.
+Professional calculator for generating 3D printing quotes and cost estimates.
 
-### 📥 Instalación
-Descarga el instalador y ejecútalo.
-Ve a la sección [**Releases**](https://github.com/Zerous12/Voxeprint-Releases/releases) para descargar la última versión.
+## 📥 Download
 
-### ✨ Características Principales
-- Cálculo automático de costos de impresión 3D
-- Gestión de inventarios (filamentos, impresoras, clientes)
-- Sistema de presupuestos y cotizaciones
-- Exportación a PDF profesional
-- Sistema de anticipo configurable
-- Post-procesado por lote o trabajo
-- Soporte multi-moneda (PYG, USD, EUR, ARS, BRL)
+Go to the [**Releases**](https://github.com/Zerous12/Voxeprint-Releases/releases) section to download the latest version.
 
-### 🔧 Requisitos
+## ✨ Key Features
+
+- Automatic 3D printing cost calculation
+- Inventory management (filaments, printers, customers)
+- Quote and budget generation system
+- Professional PDF export
+- Configurable advance payment system
+- Post-processing charges (per batch or per job)
+- Multi-currency support (PYG, USD, EUR, ARS, BRL)
+
+## 🔧 System Requirements
+
 - Windows 10/11 (64-bit)
-- 4 GB RAM mínimo
+- 4 GB RAM minimum
+- 200 MB disk space
 
-### 👨‍💻 Desarrollador
-Richard Mequert (Zerous) - Zerolabs Development
+## 🚀 Installation
 
-## 📄 Licencia
+1. Download the latest installer from [Releases](https://github.com/Zerous12/Voxeprint-Releases/releases)
+2. Run the `.exe` file
+3. Follow the installation wizard
+4. Launch Voxeprint from your Start Menu
+
+## 👨‍💻 Developer
+
+**Richard Mequert (Zerous)**  
+Zerolabs Development
+
+## 📄 License
+
 MIT License
 
-## 🎉 Voxeprint v1.1.6 - Calculadora Profesional de Impresión 3D
+## 🐛 Bug Reports & Support
+
+If you encounter any issues, please report them in the [Issues](https://github.com/Zerous12/Voxeprint-Releases/issues) section.
+
+---
+
+© 2026 Zerolabs Development. All rights reserved.
 
 
 <img width="735" height="936" alt="Captura de pantalla 2026-02-08 111717" src="https://github.com/user-attachments/assets/a591e604-5e24-4681-b95f-27282e272d9a" />
