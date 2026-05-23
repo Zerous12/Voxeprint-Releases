@@ -67,8 +67,8 @@ class PdfViewerLoader(QObject):
     def load_error_viewer(self, error_msg=None):        
         html = """
         <div style='display:flex;flex-direction:column;align-items:center;justify-content:center;height:100%;color:#b22222;font-family:sans-serif;'>
-            <h2>❌ Error al cargar el visor PDF</h2>
-            <p>No se pudo cargar el visor o el archivo PDF.</p>
+            <h2>❌ Error 404</h2>
+            <p>Archivo PDF no encontrado.</p>
             <p>{error}</p>
         </div>
         """.format(error=error_msg or "Error desconocido.")
