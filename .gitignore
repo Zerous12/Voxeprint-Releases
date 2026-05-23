@@ -1,9 +1,6 @@
 # Base de datos SQLite
 data/
 
-# PDF Viewer Module (archivos binarios pesados)
-infrastructure/integrations/pdf_viewer_mod/
-
 # Documentación pública (se incluye en el repo)
 !docs/
 !docs/CHANGELOG.txt
