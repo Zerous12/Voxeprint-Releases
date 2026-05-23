@@ -1,0 +1,26 @@
+{
+  "_meta": {
+    "country": "Paraguay",
+    "code": "PY",
+    "flag_icon": "sys_cif_py",
+    "currency": "PYG"
+  },
+  "tax_id": {
+    "label": "RUC/CI",
+    "placeholder": "Ej: 12345678-9",
+    "mask": "########-#"
+  },
+  "formats": {
+    "date": "dd/MM/yyyy",
+    "decimal_separator": ",",
+    "thousands_separator": ".",
+    "decimals_money": 0
+  },
+  "business_terms": {
+    "invoice": "Factura",
+    "quote": "Presupuesto",
+    "receipt": "Recibo",
+    "tax_name": "IVA",
+    "tax_rate_default": 10.0
+  }
+}

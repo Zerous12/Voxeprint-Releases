@@ -1,0 +1,96 @@
+{
+  "company_info": {
+    "name": "VoxePrint",
+    "address": "Direction",
+    "city": "City",
+    "phone": "+595981234567",
+    "email": "Voxeprint@mail,com",
+    "website": "Voxeprint.com"
+  },
+  "document_settings": {
+    "logo_path": "C:\\Users\\Zerou\\Desarrollo de Programas\\Voxeprint---3Dprint-Calculator\\resources\\images\\logo_for_PDF_company.png",
+    "logo_default": "resources/images/logo_for_PDF_company.png",
+    "pdf_font_family": "Arial",
+    "title": "PRESUPUESTO",
+    "subtitle": "Impresión 3D",
+    "font_config": {
+      "header": [
+        "Helvetica-Bold",
+        18
+      ],
+      "section_title": [
+        "Helvetica-Bold",
+        10
+      ],
+      "body": [
+        "Helvetica",
+        9
+      ],
+      "comments": [
+        "Helvetica",
+        7
+      ]
+    },
+    "colors": {
+      "primary": "#0070C0",
+      "accent": "#808080",
+      "text": "#000000",
+      "table_header_bg": "#0070C0",
+      "table_header_text": "#FFFFFF"
+    },
+    "margins": {
+      "x": 30,
+      "top_offset": 65,
+      "spacing_sections": 15,
+      "spacing_tables": 20,
+      "spacing_before_title": 10
+    }
+  },
+  "quote_settings": {
+    "title": "PRESUPUESTO DE IMPRESIÓN 3D",
+    "currency": "Gs.",
+    "include_iva": true,
+    "iva_rate": 10.0,
+    "include_error_margin": false,
+    "footer_comments": [
+      "Los precios pueden variar según las especificaciones finales del proyecto.",
+      "El tiempo de entrega se estima según la complejidad y disponibilidad de materiales.",
+      "Este presupuesto tiene validez de 30 días desde la fecha de emisión.",
+      "El cliente debe inspeccionar las piezas dentro de las 48 horas posteriores a la entrega.",
+      "Se requiere aprobación previa para modificaciones de diseño durante la producción.",
+      "Los archivos 3D proporcionados deben cumplir con las especificaciones técnicas requeridas.",
+      "No se aceptan devoluciones de piezas fabricadas bajo especificaciones del cliente.",
+      "Los colores pueden variar ligeramente respecto a las muestras digitales.",
+      "La empresa no se responsabiliza por defectos de diseño en archivos 3D proporcionados por el cliente.",
+      "DESDE APP"
+    ],
+    "cost_labels": {
+      "material": "Costo de Material",
+      "electricity": "Costo de Energía",
+      "wear": "Costo de Operación",
+      "failure": "Margen de Error",
+      "subtotal": "Subtotal Base",
+      "commission": "Comisión",
+      "post_processing": "Post-Procesado",
+      "subtotal_with_margin": "Subtotal con Márgenes",
+      "tax": "I.V.A (10%)",
+      "total": "TOTAL A PAGAR"
+    }
+  },
+  "note_settings": {
+    "title": "Nota de Precios",
+    "primary_color": "",
+    "display_mode": "summary",
+    "summary_label": "Servicio de Impresión 3D",
+    "postprocessing_mode": "separate",
+    "failure_margin_mode": "separate",
+    "show_material": true,
+    "show_electricity": true,
+    "show_wear": true,
+    "show_failure_margin": true,
+    "show_commission": true,
+    "show_post_processing": true,
+    "show_tax": true,
+    "obs_text": "Esta nota de precios es informativa y no tiene validez legal ni fiscal. Los precios pueden variar según las especificaciones finales del proyecto. Válida por 30 días desde la fecha de emisión."
+  }
+}

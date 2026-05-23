@@ -1,0 +1,24 @@
+{
+  "country": "Perú",
+  "code": "PE",
+  "flag_icon": "sys_cif_pe",
+  "currency": "PEN",
+  "tax_id": {
+    "label": "RUC",
+    "placeholder": "Ej: 12345678901",
+    "mask": "###########"
+  },
+  "formats": {
+    "date": "dd/MM/yyyy",
+    "decimal_separator": ".",
+    "thousands_separator": ",",
+    "decimals_money": 2
+  },
+  "business_terms": {
+    "invoice": "Factura",
+    "quote": "Cotización",
+    "receipt": "Recibo",
+    "tax_name": "IGV",
+    "tax_rate_default": 18.0
+  }
+}

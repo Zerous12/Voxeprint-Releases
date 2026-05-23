@@ -1,0 +1,372 @@
+﻿VoxePrint v1.2.4 - Build 124 (23.05.2026)
+===============================================
++ Cortador de imágenes: La herramienta de recorte de logos e imágenes es ahora más rápida y fácil de usar.
++ Ajustes del Sistema: Nuevo tab "Idioma" con selector de idioma de la aplicación y selector de región/localización con vista previa de etiqueta fiscal y formato de fecha
++ Ajustes del Sistema: Al cambiar el idioma o la región se muestra un aviso de reinicio para aplicar los cambios correctamente en toda la aplicación
++ Ajustes del Sistema: Nota informativa en el tab Idioma que explica en qué partes de la app afectan estos cambios (textos, fechas, etiquetas fiscales)
++ Ajustes del Sistema: La Información de Base de Datos se reubicó dentro del tab Base de Datos
++ Ajustes del Sistema: El tab Base de Datos ya no muestra el bloque de migraciones técnicas, simplificando la vista
++ Ajustes del Sistema: Nuevo orden de pestañas dentro de Ajustes: Idioma → Sistema → Base de Datos → Respaldo
++ Clientes: La etiqueta de identificación fiscal cambia automáticamente según la región configurada (RUC, CUIT, NIT, CPF, RFC, DNI, etc.)
++ Clientes: La etiqueta dinámica se aplica en listas, formularios, detalles y selector de clientes
++ Presupuesto PDF: La etiqueta de identificación fiscal impresa sigue la región configurada
++ Presupuesto PDF: El formato de fecha respeta la región activa (dd/mm/aaaa, mm/dd/aaaa, etc.)
++ Presupuesto PDF: El total en letras se genera según el idioma activo, con soporte multimoneda
++ Presupuesto PDF: Nueva opción de vista detallada o resumida
++ Presupuesto PDF: Personalización de colores del documento desde Ajustes del Sistema
++ Presupuesto PDF: Mejora significativa en la velocidad de generación del PDF
++ Nota de Precios: Nueva opción de vista detallada o resumida
++ Interfaz: Los textos de la ventana principal y del selector de clientes reflejan correctamente el idioma configurado
+- Fixed: El botón de Nota de Precios permanecía bloqueado cuando no había cliente seleccionado
+- Fixed: El bloqueo del checkbox de cliente afectaba incorrectamente al botón de Nota de Precios
+- Fixed: El generador de PDF podía quedar congelado al usar clientes opcionales
++ Idiomas: Nuevo sistema completo de traducción para toda la aplicación
++ Idiomas: Todos los textos visibles están centralizados y listos para ser traducidos
++ Idiomas: Traducciones completas en español e inglés para todos los módulos principales
++ Idiomas: Si una traducción no está disponible, la aplicación muestra automáticamente un texto alternativo disponible
++ Sistema: Mejor velocidad y uso de recursos en tareas secundarias para una experiencia más fluida mientras se trabaja.
+- Fixed: Se corrigieron pequeños errores visuales y de funcionamiento reportados por usuarios
+- Fixed: El color del filamento en el diálogo de detalles ahora se muestra traducido al idioma activo
+- Fixed: Hacer doble clic sobre un filamento del inventario lo cargaba automáticamente en el presupuesto de forma no intencional
+- Fixed: Los mensajes de "ya tienes la última versión" y "error al verificar actualizaciones" aparecían siempre en español sin respetar el idioma configurado
+- Fixed: El IVA del PDF se calculaba incorrectamente cuando había post-procesado habilitado
+- Fixed: El total en letras del PDF podía fallar en configuraciones regionales en portugués; ahora se genera correctamente
+- Fixed: La aplicación se cerraba silenciosamente al generar un PDF con cliente seleccionado, post-procesado y anticipo habilitados simultáneamente
+- Fixed: El callback de generación de PDF se ejecutaba en el hilo secundario en lugar del hilo principal, causando un crash no capturado en Qt
+- Fixed: Se corrigió un problema que a veces impedía mostrar correctamente la miniatura (thumbnail) del modelo en el visor G-code.
+- Fixed: Los errores durante la generación del PDF no quedaban registrados en el log; ahora se reportan correctamente mediante VoxeprintLogger
++ Presupuesto PDF: El encabezado ahora muestra el Email de la empresa debajo del teléfono; se omite automáticamente si el campo está vacío
++ Presupuesto PDF: El número de presupuesto (Quote #) ahora se alinea visualmente con la Ciudad en el encabezado del documento
++ Visor PDF: El diálogo ahora cabe en pantallas de 720p sin recortes ni barras de desplazamiento
++ Visor PDF: El número de presupuesto en el encabezado se mantiene siempre pegado al borde derecho al maximizar o redimensionar la ventana
++ Monedas: Nuevas 9 monedas LATAM disponibles en el sistema
++ Monedas: Las instalaciones existentes agregan automáticamente las nuevas monedas sin modificar la configuración actual
++ Donaciones: Nueva opción de transferencia bancaria ACH para donantes de Estados Unidos, con datos bancarios copiables desde el diálogo
++ Donaciones: Nuevo orden de métodos de donación: ACH (EE.UU.) → Transferencia bancaria (Paraguay) → Criptomonedas
++ Donaciones: El diálogo ACH tiene la misma presentación visual que el de Paraguay: label de beneficiario y botón Copiar con confirmación visual
++ Donaciones: Las descripciones de cada tarjeta indican claramente el país o región al que aplica el método
++ Donaciones: Todos los textos del diálogo de donaciones están completamente traducidos al idioma configurado
++ Interfaz: El color del texto de progreso en el splash screen se adapta automáticamente al tema del sistema (claro u oscuro)
++ Idiomas: Los mensajes de carga del splash screen están traducidos al idioma configurado
++ Filamentos: Más tipos y colores de filamento disponibles, incluyendo opciones metálicas, fluorescentes y especiales.
++ G-Code: Carga de archivos G-code optimizada para mayor agilidad, incluso con archivos grandes o complejos.
+
+VoxePrint v1.2.0 - Build 121 (29.04.2026)
+===============================================
++ G-Code: Corrección en el cálculo multicolor de peso y longitud; ahora el parser suma todos los valores de "; filament used [g]" y "; filament used [mm]" en lugar de tomar solo el primero
++ G-Code: Nuevo fallback inteligente por cm³ cuando el slicer no informa peso real; se calcula según densidad por slot usando prioridad entre gcode, tabla interna por material y valor por defecto
++ G-Code: Nueva tabla interna de densidades estándar por tipo de filamento para mejorar la estimación de peso en archivos sin densidad configurada
++ G-Code: Mejora en la detección de slicers con soporte correcto para encabezados reales de Creality Print
+- Fixed: Los archivos multicolor de Creality Print y PrusaSlicer podían calcular solo el primer slot de material en lugar del total
+- Fixed: OrcaSlicer multicolor sin densidad configurada aplicaba un valor fijo a todos los slots en vez de respetar el tipo de filamento
+- Fixed: Algunos G-code generados por Creality Print no mostraban el slicer detectado aunque el encabezado estuviera presente
++ Nota de Precios: Nueva opción de validez configurable con checkbox y selector de 1 a 30 días en la pestaña Nota de Ajustes
++ Nota de Precios: La frase de validez se agrega automáticamente al campo de observaciones solo cuando la opción está activa
++ Nota de Precios: Campo de observaciones con límite aproximado de 162 caracteres para evitar desbordes visuales
++ Nota de Precios: Diseño del canvas reorganizado con altura fija, footer anclado al borde inferior y observaciones centradas en el espacio disponible
++ Nota de Precios: Encabezado visual simplificado; se eliminó el título "DESGLOSE DE COSTOS" y el separador horizontal para dar más limpieza
++ Nota de Precios: Bloque de empresa simplificado para mostrar solo teléfono y correo, alineado al borde izquierdo de la tabla
++ Nota de Precios: Ajustes de jerarquía visual en meta datos, teléfonos y correos, ahora con color negro y mejor separación entre etiquetas y valores
++ Nota de Precios: Tabla optimizada con filas más compactas y anticipo nuevamente separado en dos renglones
++ Nota de Precios: Nuevo fallback de logo; si no hay imagen disponible, se muestra el nombre de la empresa centrado con el color principal
++ Nota de Precios: Color de fondo de la fila Total derivado automáticamente del color principal para mantener coherencia con cualquier tema elegido
++ Nota de Precios: Botones Copiar, Guardar como... y Cerrar rediseñados con el estilo del visor PDF e iconos del sistema
++ Nota de Precios: Confirmación visual al copiar al portapapeles mediante tooltip flotante sin alterar el estado del botón
++ Nota de Precios: Guardado de imagen con carpeta sugerida en Descargas o Escritorio y nombre predeterminado compatible con Linux y Windows
++ Nota de Precios: Ventana fija tras la carga para evitar redimensionamiento y barras de desplazamiento innecesarias
++ Nota de Precios: Ajustes de texto y espaciado en pie de página, campos meta y distribución general para una presentación más limpia
++ Ajustes del Sistema: La pestaña Nota incorpora controles para validez, límite visual en observaciones y selector de color primario con diálogo nativo
++ Ajustes del Sistema: El selector de días y el botón "Elegir" se habilitan o deshabilitan junto con el resto del formulario en modo edición
++ Ajustes del Sistema: QuoteConfigManager y el presenter ahora cargan y guardan la configuración de validez de forma persistente
++ Ajustes del Sistema: Los valores por defecto de la nota incluyen validez activa por 30 días y observación base sin texto de vencimiento fijo
++ Ajustes del Sistema: Se añadió validación HEX al color primario y un swatch de previsualización independiente de los estilos del tooltip
++ Archivos: Los diálogos para seleccionar logo y archivos G-code ahora abren por defecto en Descargas o Escritorio según disponibilidad
+- Fixed: El swatch de color primario heredaba estilos al tooltip flotante y afectaba su apariencia
+
+
+
+VoxePrint v1.1.8 - Build 120 (26.04.2026)
+===============================================
++ G-Code: Parser completo de archivos G-code y 3MF con extracción de tiempo, peso, tipo de material, modelo de impresora, color, temperaturas y más
++ G-Code: Soporte multi-slicer: PrusaSlicer, OrcaSlicer, Cura, BambuStudio, SuperSlicer, IdeaMaker, Simplify3D, AnkerMake, Creality Print y FlashPrint
++ G-Code: Extracción automática de thumbnails embebidos en G-code y archivos 3MF con selección de la mejor resolución
++ G-Code: Soporte completo de archivos 3MF (metadata JSON, XML/config y G-code embebido dentro del ZIP)
++ G-Code: Normalización inteligente de nombres de filamento (90+ reglas) a los tipos estándar de Voxeprint
++ G-Code: Auto-completado de campos al cargar un archivo (horas, minutos, peso, thumbnail, parámetros del slicer)
++ G-Code: Coincidencia automática entre la impresora del G-code y las impresoras registradas en la base de datos
++ G-Code: Coincidencia automática de filamento por tipo y color contra el inventario registrado
++ G-Code: Estimación de peso a partir de longitud de filamento cuando el peso no está disponible
++ Impresoras: Catálogo integrado de 61 marcas y 351+ modelos disponible
++ Impresoras: Selector cascada Marca → Modelo en diálogos de agregar y editar impresora
++ Impresoras: Campo de marca obligatorio con validación de consumo mínimo de 10W
++ Impresoras: Detalle enriquecido en ventana principal mostrando Marca, Modelo y Consumo
++ Interfaz: Rediseño completo de la ventana principal con nueva distribución de paneles y secciones
++ Interfaz: Ventana principal ampliada de 652px a 972px para acomodar el nuevo panel lateral
++ Interfaz: Selectores de impresora y filamento migrados de campos de texto a opciones con selección directa
++ Interfaz: Nuevo groupbox "Autocompletar" con carga de G-code, descripción de proyecto, detalles y preview de thumbnail
++ Interfaz: Panel de resumen reubicado desde la pestaña de presupuesto al panel lateral derecho colapsable
++ Interfaz: Pestaña Cotizaciones reorganizada: botón "Exportar" reemplazado por botón "Reportes"
++ Interfaz: Pestaña Clientes: columna "Status" renombrada a "Preferencia" con nuevo botón "Predeterminar"
++ Interfaz: Limpieza de textos de configuración y correcciones tipográficas
++ Interfaz: Estilos de QTextEdit simplificados, eliminando bordes globales en favor de estilos inline
++ Interfaz: Panel de procesos lateral con animación profesional en dos fases
++ Interfaz: Botón de panel lateral en la barra inferior y atajo Ctrl+9 para abrir/cerrar
++ Interfaz: Ícono dinámico del botón toggle que cambia según estado (abierto/cerrado)
++ Interfaz: Ícono del panel lateral en gris acorde al estilo de la barra inferior
++ Interfaz: Efecto hover en botón de panel lateral (blanco en tema oscuro, negro en tema claro)
++ Interfaz: Truncado automático de nombres largos de cliente con "..." en el campo de selección
++ Interfaz: Truncado dinámico del campo RUC/CI adaptado al largo de la etiqueta según la región
++ Interfaz: Combobox con múltiples opciones cuando el G-code encuentra varias coincidencias de impresora o filamento
++ Interfaz: Atajos de teclado documentados en el mensaje de bienvenida al iniciar
++ Sistema: Al presionar F5 se muestra confirmación visible de actualización de todas las tablas
++ Sistema: Carga inicial de la aplicación ejecutada en hilo separado con 6 pasos de progreso
++ Sistema: Tipos de filamento ampliados a 50+ variedades
++ Sistema: Paleta de colores de filamento extendida a 150+ opciones incluyendo metálicos, fluorescentes y translúcidos
++ Base de datos: Servicio de restauración avanzado con backups versionados y validación de compatibilidad
++ Base de datos: Metadatos completos por backup (fecha, tamaño, versión, conteo de registros)
++ Base de datos: Estadísticas de la base de datos actual (versión, tamaño, registros, estado de backups)
++ Reportes: Generación asíncrona en hilo secundario con animación de espera
++ PDF: Generación de presupuestos en hilo secundario sin bloquear la interfaz
++ Cálculos: El cálculo automático y manual ya no requiere seleccionar un cliente previamente
+- Fixed: Las tablas de filamentos, impresoras y clientes no mostraban mensaje al actualizarse con F5
+- Fixed: El cálculo se bloqueaba si no se había seleccionado un cliente, aunque no fuera necesario
+- Fixed: La validación de cliente ahora solo se exige al generar el PDF del presupuesto
+
+
+VoxePrint v1.1.7 - Build 118 (21.03.2026)
+===============================================
++ Sistema: Splash screen con carga de la aplicación mejorado
++ Sistema: Inicialización diferida del gestor de base de datos
++ Sistema: inicio en paralelo para acelerar la aparición del splash
++ Sistema: Esquema de base de datos completamente idempotente
++ Sistema: Verificación y protección contra DB vacía/corrupta en cada inicio
++ Sistema: Mejora en la gestión de cierre y liberación de locks de aplicación
++ Sistema: Soporte completo para múltiples monedas (Guaraníes, Dólares, Euros)
++ Sistema: Formato automático de monedas según configuración del sistema
++ Sistema: Preservación de decimales en cálculos para monedas que lo requieren
++ Sistema: Servicio de conversión de monedas con tasas actualizables
++ Sistema: Ajustes automáticos de conversión en textos y campos monetarios
++ Sistema: Herramienta interactiva de recorte de logo para PDFs (720x210px)
++ Sistema: Editor de imágenes integrado con 8 ajustes profesionales
++ Ajustes de Imagen: Control de Zoom (25%-100%)
++ Ajustes de Imagen: Contraste (-100/+100)
++ Ajustes de Imagen: Brillo (-100/+100)
++ Ajustes de Imagen: Saturación (-100/+100) para ajustar intensidad de colores
++ Ajustes de Imagen: Nitidez (-50/+50) con sharpen y blur gaussiano
++ Ajustes de Imagen: Gamma (0.5-2.0) para corrección de luminosidad
++ Ajustes de Imagen: Rotación (-45°/+45°) para enderezar logos
++ Ajustes de Imagen: Voltear horizontal/vertical para reflejar imágenes
++ Interfaz: Vista previa de presupuesto con colores tipo Excel y paleta centralizada
++ Interfaz: Formateo automático de mayúsculas en campos de clientes, impresoras y filamentos
++ Interfaz: Preview en tiempo real del logo recortado a escala 1:2
++ Interfaz: Selector visual con aspect ratio fijo 24:7 y handles redimensionables
++ Interfaz: Paleta de colores mejorada en botones de gestión de logo
++ Interfaz: Comportamiento consistente de controles deshabilitados
++ Interfaz: Widgets conscientes de moneda
++ PDF: Optimización de gestión de impresión y descarga desde visor PDF.js
++ PDF: Tabla de costos con formato correcto según la moneda configurada
++ PDF: Total en letras con conversión precisa a español según la moneda
++ PDF: Mejoras en gramática española para conversión de números a texto
++ PDF: Logos ahora soportan letterbox automático y transparencias
++ Cálculos: Sistema de conversión de anticipos con tasas de cambio actuales
++ Cálculos: Corrección de errores de redondeo en conversiones monetarias
++ Cálculos: Mayor precisión en todos los costos operacionales
++ Cálculos: Validación de conversiones en tiempo real
++ Donaciones: Simplificación del sistema a solo Criptomonedas y Transferencias bancarias
++ Donaciones: Nuevo diálogo con información de bancos paraguayos
++ Donaciones: Función de copiado rápido de alias bancarios
++ Donaciones: Mejora visual de botones y limpieza de mensajes al abrir enlaces
++ Donaciones: Detección automática de tema claro/oscuro
++ Actualizaciones: Sistema de verificación automática con caché inteligente de 7 días
++ Actualizaciones: Diálogo mejorado con checkbox "No volver a mostrar esta versión"
++ Actualizaciones: Botón directo a página de releases en GitHub
++ Actualizaciones: Anti-spam con cooldown de 60 segundos y countdown dinámico
++ Actualizaciones: Detección automática de cambios de versión local para invalidar caché
++ Actualizaciones: Invalidación de caché cuando el usuario actualiza manualmente la aplicación
++ Actualizaciones: Configuración en preferencias de usuario (Automático/Manual)
++ Actualizaciones: Frecuencias configurables: Al iniciar/Cada 7/15/30 días (default: 30 días)
++ Actualizaciones: Iconos con recoloración automática según tema claro/oscuro
++ Actualizaciones: Mensajes informativos en registro del sistema para todas las verificaciones
++ Actualizaciones: Distinción clara entre errores de conexión y ausencia de actualizaciones
++ Actualizaciones: Deshabilitación de botón durante verificación para evitar spam
++ Dependencias: Agregada scipy para procesamiento avanzado de imágenes
++ Reportes: Generación de PDF de estadísticas de presupuestos con gráficos y tablas (3 páginas A4)
++ Reportes: KPIs principales: total cotizado, cantidad de presupuestos, ticket promedio, variación mensual
++ Reportes: Gráficos de montos mensuales, tendencias, productividad, distribución y actividad semanal/diaria
++ Reportes: Rankings de clientes y filamentos por monto cotizado
++ Reportes: Tabla resumen numérica con detalle mensual y totales
++ Reportes: Visor integrado con opciones de impresión (Ctrl+P) y descarga (Ctrl+S)
++ Reportes: Filtro por rango de fechas desde el historial de presupuestos
++ Interfaz: Animación de carga  durante generación de reportes y presupuestos
++ Interfaz: Sistema reutilizable async para operaciones pesadas sin bloquear la interfaz
++ Logging: Auditoría completa de módulos nuevos — errores técnicos redirigidos a logs
++ Dependencias: Agregada matplotlib para generación de gráficos
++ Clientes: Botón "Predeterminar" para marcar cliente como predeterminado desde inventario
++ Filamentos: Ampliación de paleta de colores (80 colores totales)
++ Filamentos: Colores translúcidos, fluorescentes, bicolor/multicolor, tendencia, y adicionales 
++ Interfaz: Borde naranja en panel "Ajustes de Moneda" para mayor visibilidad
++ Interfaz: Limpieza de texto innecesario en descripciones y etiquetas del sistema
+- Fixed: Bloqueo de redimensionamiento en diálogos para evitar superposición de widgets
+- Fixed: Error de cierre cuando el archivo de lock de aplicación ya no existe
+- Fixed: Bugs menores en validaciones de inventarios y selectores
+- Fixed: Errores de sincronización en la edición de colores de la previsualización
+- Fixed: Cálculos mostraban valores en cero al usar dólares o euros
+- Fixed: PDF mostraba valores sin decimales en monedas extranjeras
+- Fixed: Errores ortográficos en conversión de números a texto
+- Fixed: Conversión incorrecta de números grandes en PDF
+- Fixed: Símbolos de moneda no se actualizaban según configuración
+- Fixed: Formatos de moneda fijos en diferentes secciones de la aplicación
+- Fixed: Conversión de anticipos calculaba montos incorrectos con monedas extranjeras
+- Fixed: Errores de redondeo en conversiones de montos con decimales
+- Fixed: Textos no se actualizaban al cambiar moneda del sistema
+- Fixed: Controles numéricos permitían interacción cuando estaban deshabilitados
+- Fixed: Mensajes debug excesivos en consola de múltiples módulos
+- Fixed: Logging inconsistente entre módulos
+- Fixed: Intercepción y cancelación de descarga si el presupuesto no ha sido guardado
+- Fixed: Diálogos de actualización duplicados apareciendo simultáneamente
+- Fixed: Rate limiting de API de GitHub (60 solicitudes/hora) causando errores frecuentes
+- Fixed: Orden incorrecto de mensajes en log del sistema de actualizaciones
+- Fixed: Verificaciones constantes al iniciar saturaban la API de GitHub
+- Fixed: Caché no se invalidaba al actualizar manualmente la versión de la aplicación
+- Fixed: Errores técnicos se mostraban al usuario en mensajes de error de presupuestos y reportes
+- Fixed: Información técnica interna se mostraba innecesariamente en consola
+- Fixed: Imports directos de funciones de logger reemplazados por instancia centralizada
+- Fixed: Base de datos quedaba vacía (0 bytes) si se iniciaba por primera vez
+- Fixed: Automatismos de ejecuciones al iniciar causaban error al re-ejecutar esquema sobre DB existente
+- Fixed: Instancias duplicadas del gestor de configuración del sistema
+- Fixed: Duplicado de clientes predeterminados al reiniciar la aplicación
+- Fixed: Al iniciar por primera vez intentaba acceder a configuración inexistente 
+
+
+VoxePrint v1.1.6 - Build 112 (09.11.2025)
+===============================================
++ Base de Datos: Actualización a versión 1.1 con corrección de timestamps
++ Base de Datos: Timestamps ahora usan hora local en lugar de UTC
++ Base de Datos: Sistema de persistencia inmediata con autocommit
++ Base de Datos: Nuevos triggers para actualización de timestamps en hora local
++ Sistema: Script de migración automática de v1.0 a v1.1
++ Sistema: Corrección de desfase de 3 horas en fechas de presupuestos
++ Sistema: PRAGMA synchronous = FULL para escritura inmediata a disco
++ Licencias: Widget de donacion con animación
++ Licencias: Sistema de licencia abierta con donaciones voluntarias
++ Interfaz: Mejora de visibilidad en mensajes de configuración del sistema
++ Interfaz: Optimización del diálogo "Acerca de" con buffer
++ Rendimiento: Mejora ~100x en renderizado de animación de créditos
++ Logging: Limpieza de debug excesivos en módulos de UI
++ Logging: Optimizaciones del logger.info/debug según contexto
++ Cálculos: Corrección de fórmula de cálculo de costo de energía
++ Filamentos: Ampliación de paleta de colores (30+ colores nuevos)
++ Filamentos: Ampliación de tipos de materiales (20+ tipos nuevos)
++ Impresoras: Permitir eliminación de impresoras marcadas como predeterminadas
++ Impresoras: Limpieza automática de UI al eliminar impresora predeterminada
++ Sistema: Flujo mejorado entre WelcomeDialog y ventana principal
+- Fixed: Presupuestos mostraban fecha/hora UTC (+3 horas adelant)
+- Fixed: Presupuestos no se reflejaban en BD hasta reiniciar aplicación
+- Fixed: isolation level causaba commits diferidos en SQLite
+- Fixed: Stuttering y saltos en scroll de diálogo "Acerca de"
+- Fixed: Texto de baja resolución en animación de créditos
+- Fixed: Clipping de descenders en letras (q, j, p, g, y)
+- Fixed: Logs excesivos en consola de animaciones y botones
+- Fixed: Cálculo de costo de energía con fórmula incorrecta
+- Fixed: No se podían eliminar impresoras marcadas como predeterminadas
+- Fixed: UI no se limpiaba al eliminar impresora predeterminada
+- Fixed: Flujo entre WelcomeDialog y ventana principal requería reinicio
+- Fixed: Ventana principal no se mostraba correctamente después de Welcome
+- Fixed: Presupuestos no mostraban nombre del cliente en historial
+- Fixed: identificador del cliente no se guardaba al crear presupuestos
+- Fixed: Módulo de seguridad de build causaba error de lectura
+
+
+VoxePrint v1.1.5, build 109 (09.10.2025)
+==========================================
++ Sistema: Nueva funcionalidad de visualización de PDFs para presupuestos guardados
++ Sistema: Mejoras en el sistema de logging - reducción de ruido visual en interfaz
++ Interfaz: Implementación completa de SavedQuotePDFViewer con integración de temas
++ Interfaz: Corrección  de estado en tablas
++ Interfaz: Mejoras en formateo de costos 
++ Interfaz: Estandarización de símbolos de moneda
++ Interfaz: Mejora en detalles de presupuestos - nombres descriptivos en lugar de IDs
++ Interfaz: Botón de apertura de PDF con verificación de existencia de archivos
++ Presupuestos: Verificación real de existencia de archivos PDF en tabla de presupuestos
++ Presupuestos: Sincronización correcta entre estado de tabla y botón de apertura
++ Presupuestos: Integración de tema automático en visor PDF (dark/light mode)
++ Impresoras: Corrección de formato de costos operacionales en inventario y detalles
++ Impresoras: Mejoras en presentación de información en selectores
++ Filamentos: Actualización de indicadores de estado en selectores
++ Filamentos: Consistencia visual con otros módulos del sistema
+- Fixed: Problema de borde rojizo en iconos de botones
+- Fixed: Verificación incorrecta de disponibilidad de PDFs en tabla
+- Fixed: Inconsistencia entre verificación de tabla y botón para PDFs
+- Fixed: Formato inconsistente de decimales en costos operacionales
+- Fixed: Símbolos de moneda incorrectos en varios módulos
+- Fixed: Detalles poco descriptivos en inventario de presupuestos
+- Fixed: Problema de parpadeo en ventanas del visor PDF
+- Fixed: Logs excesivos en interfaz visual del usuario
+- Fixed: Tamaño inadecuado de groupBox en visor PDF
++ Logging: Sistema centralizado con VoxeprintLogger para todos los módulos
++ Logging: Mensajes de consola convertidos a logs estructurados
++ Logging: Formato estandarizado: módulo + mensaje + contexto opcional
+
+VoxePrint v1.1.2, build 98 (05.10.2025)
+=========================================
++ Sistema: Implementación de sistema de logging centralizado con VoxeprintLogger
++ Sistema: Mejoras en arquitectura MVP para mejor separación de responsabilidades
++ Interfaz: Refinamiento de interfaz de usuario en módulos principales
++ Interfaz: Mejoras en navegación entre tabs y gestión de estado
++ Base de Datos: Optimizaciones en consultas y manejo de conexiones
++ Presupuestos: Mejoras en generación y gestión de presupuestos
++ Presupuestos: Sistema de historial mejorado con filtros avanzados
++ Impresoras: Gestión mejorada de inventario de impresoras
++ Impresoras: Campos adicionales para especificaciones técnicas
++ Filamentos: Sistema de inventario de filamentos optimizado
++ Filamentos: Mejoras en cálculo de costos por material
++ Clientes: Gestión mejorada de base de datos de clientes
++ Clientes: Campos adicionales para información de contacto
++ PDF: Mejoras en generación de PDFs de presupuestos
++ PDF: Sistema de plantillas más flexible
+- Fixed: Problemas de performance en carga de datos grandes
+- Fixed: Errores de validación en formularios
+- Fixed: Problemas de sincronización entre módulos
+- Fixed: Errores en cálculos de costos complejos
+- Fixed: Problemas de compatibilidad con diferentes resoluciones
+- Fixed: Errores en exportación de datos
+- Fixed: Problemas de memoria en operaciones prolongadas
+
+
+VoxePrint v1.0.9, build 74 (20.09.2025)
+=========================================
++ Sistema: Primera versión estable del sistema de cotización 3D
++ Sistema: Interfaz gráfica completa con Qt/PySide6
++ Sistema: Sistema de base de datos SQLite integrado
++ Sistema: Arquitectura modular con patrón MVP
++ Sistema: Sistema de temas claro/oscuro
++ Sistema: Gestión completa de inventarios (impresoras, filamentos, clientes)
++ Cálculos: Motor de cálculo para presupuestos de impresión 3D
++ Cálculos: Factores de tiempo, material y costos operacionales
++ Cálculos: Cálculo automático de margen de ganancia
++ Presupuestos: Sistema completo de generación de presupuestos
++ Presupuestos: Numeración automática con formato personalizable
++ Presupuestos: Gestión de estados y historial de presupuestos
++ Impresoras: Inventario completo de impresoras 3D
++ Impresoras: Especificaciones técnicas y costos operacionales
++ Impresoras: Sistema de activación/desactivación de equipos
++ Filamentos: Gestión de inventario de materiales
++ Filamentos: Costos por kilogramo y control de stock
++ Filamentos: Especificaciones técnicas de materiales
++ Clientes: Base de datos completa de clientes
++ Clientes: Información de contacto y historial
++ Clientes: Sistema de búsqueda y filtrado
++ PDF: Generación automática de PDFs de presupuestos
++ PDF: Plantillas profesionales personalizables
++ PDF: Sistema de previsualización integrado
++ Base de Datos: Esquema completo con todas las entidades
++ Base de Datos: Sistema de migración y actualizaciones
++ Base de Datos: Respaldos automáticos de seguridad
++ Interfaz: Diseño moderno y responsive
++ Interfaz: Animaciones y transiciones suaves
++ Interfaz: Sistema de notificaciones y mensajes de estado
++ Sistema: Configuración avanzada del sistema
++ Sistema: Gestión de preferencias de usuario
++ Sistema: Sistema de logging para debugging
+
+=========================================

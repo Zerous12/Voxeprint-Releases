@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!-- Uploaded to: SVG Repo, www.svgrepo.com, Transformed by: SVG Repo Mixer Tools -->
+
+<svg
+   fill="#ffffff"
+   width="404.80002"
+   height="510.40002"
+   viewBox="0 0 23 29"
+   id="icon"
+   stroke="#ffffff"
+   version="1.1"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:svg="http://www.w3.org/2000/svg">
+  <defs
+     id="defs3" />
+  <g
+     id="SVGRepo_iconCarrier"
+     transform="translate(-4.5,-1.5)">
+    <defs
+       id="defs1">
+      <style
+         id="style1">.cls-1{fill:none;}</style>
+    </defs>
+    <title
+       id="title1">report--alt</title>
+    <rect
+       x="10"
+       y="18"
+       width="8"
+       height="2"
+       id="rect1" />
+    <rect
+       x="10"
+       y="13"
+       width="12"
+       height="2"
+       id="rect2" />
+    <rect
+       x="10"
+       y="23"
+       width="5"
+       height="2"
+       id="rect3" />
+    <path
+       d="M 25,5 H 22 V 4 A 2,2 0 0 0 20,2 H 12 A 2,2 0 0 0 10,4 V 5 H 7 A 2,2 0 0 0 5,7 v 21 a 2,2 0 0 0 2,2 h 18 a 2,2 0 0 0 2,-2 V 7 A 2,2 0 0 0 25,5 Z M 12,4 h 8 V 8 H 12 Z M 25,28 H 7 V 7 h 3 v 3 H 22 V 7 h 3 z"
+       id="path3" />
+  </g>
+</svg>

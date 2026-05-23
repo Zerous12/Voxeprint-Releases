@@ -1,0 +1,24 @@
+{
+  "country": "Nicaragua",
+  "code": "NI",
+  "flag_icon": "sys_cif_ni",
+  "currency": "NIO",
+  "tax_id": {
+    "label": "RUC",
+    "placeholder": "Ej: 1234567890A1B",
+    "mask": "############"
+  },
+  "formats": {
+    "date": "dd/MM/yyyy",
+    "decimal_separator": ".",
+    "thousands_separator": ",",
+    "decimals_money": 2
+  },
+  "business_terms": {
+    "invoice": "Factura",
+    "quote": "Cotización",
+    "receipt": "Recibo",
+    "tax_name": "IVA",
+    "tax_rate_default": 15.0
+  }
+}

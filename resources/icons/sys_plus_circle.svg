@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!-- Uploaded to: SVG Repo, www.svgrepo.com, Transformed by: SVG Repo Mixer Tools -->
+
+<svg
+   width="514.9566"
+   height="512.95184"
+   viewBox="0 0 22.752127 22.663551"
+   fill="none"
+   version="1.1"
+   id="svg1"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:svg="http://www.w3.org/2000/svg">
+  <defs
+     id="defs1" />
+  <g
+     id="SVGRepo_bgCarrier"
+     stroke-width="0"
+     transform="translate(-0.62393518,-0.66822391)" />
+  <g
+     id="SVGRepo_tracerCarrier"
+     stroke-linecap="round"
+     stroke-linejoin="round"
+     transform="translate(-0.62393518,-0.66822391)" />
+  <g
+     id="SVGRepo_iconCarrier"
+     transform="matrix(0.93930811,0,0,0.94431468,0.10436746,0)">
+    <path
+       fill-rule="evenodd"
+       clip-rule="evenodd"
+       d="m 13.211111,8.3999996 c 0,-0.6627359 -0.542215,-1.1999999 -1.211111,-1.1999999 -0.668897,0 -1.211111,0.537264 -1.211111,1.1999999 V 10.8 H 8.3666664 c -0.6688724,0 -1.2111111,0.53724 -1.2111111,1.199999 0,0.66276 0.5422387,1.2 1.2111111,1.2 h 2.4222226 v 2.4 c 0,0.66276 0.542214,1.2 1.211111,1.2 0.668896,0 1.211111,-0.53724 1.211111,-1.2 v -2.4 h 2.422222 c 0.668896,0 1.211111,-0.53724 1.211111,-1.2 C 16.844444,11.33724 16.302229,10.8 15.633333,10.8 H 13.211111 Z M -0.111111,11.999999 C -0.111111,5.3725798 5.3112149,0 12,0 c 6.688724,0 12.11111,5.3725798 12.11111,11.999999 0,6.62736 -5.422386,12 -12.11111,12 -6.6887851,0 -12.111111,-5.37264 -12.111111,-12 z"
+       fill="#ffffff"
+       id="path1"
+       style="stroke-width:1.20554" />
+  </g>
+</svg>

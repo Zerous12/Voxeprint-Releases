@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!-- Uploaded to: SVG Repo, www.svgrepo.com, Transformed by: SVG Repo Mixer Tools -->
+
+<svg
+   width="512"
+   height="512"
+   viewBox="0 0 32 32"
+   version="1.1"
+   fill="#000000"
+   id="svg1"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:svg="http://www.w3.org/2000/svg"
+   xmlns:sketch="http://www.bohemiancoding.com/sketch/ns">
+  <defs
+     id="defs2" />
+  <g
+     id="SVGRepo_bgCarrier"
+     stroke-width="0" />
+  <g
+     id="SVGRepo_tracerCarrier"
+     stroke-linecap="round"
+     stroke-linejoin="round" />
+  <g
+     id="SVGRepo_iconCarrier">
+    <title
+       id="title1">plus-circle</title>
+    <desc
+       id="desc1">Created with Sketch Beta.</desc>
+    <defs
+       id="defs1" />
+    <g
+       id="Page-1"
+       stroke="none"
+       stroke-width="1"
+       fill="none"
+       fill-rule="evenodd"
+       sketch:type="MSPage">
+      <g
+         id="Icon-Set-Filled"
+         sketch:type="MSLayerGroup"
+         transform="translate(-466,-1089)"
+         fill="#ffffff">
+        <path
+           d="m 488,1106 h -5 v 5 c 0,0.55 -0.447,1 -1,1 -0.553,0 -1,-0.45 -1,-1 v -5 h -5 c -0.553,0 -1,-0.45 -1,-1 0,-0.55 0.447,-1 1,-1 h 5 v -5 c 0,-0.55 0.447,-1 1,-1 0.553,0 1,0.45 1,1 v 5 h 5 c 0.553,0 1,0.45 1,1 0,0.55 -0.447,1 -1,1 z m -6,-17 c -8.837,0 -16,7.16 -16,16 0,8.84 7.163,16 16,16 8.837,0 16,-7.16 16,-16 0,-8.84 -7.163,-16 -16,-16 z"
+           id="plus-circle"
+           sketch:type="MSShapeGroup" />
+      </g>
+    </g>
+  </g>
+</svg>

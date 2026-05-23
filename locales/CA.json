@@ -1,0 +1,24 @@
+{
+  "country": "Canadá",
+  "code": "CA",
+  "flag_icon": "sys_cif_ca",
+  "currency": "CAD",
+  "tax_id": {
+    "label": "BN/SIN",
+    "placeholder": "Ej: 123456789",
+    "mask": "#########"
+  },
+  "formats": {
+    "date": "dd/MM/yyyy",
+    "decimal_separator": ".",
+    "thousands_separator": ",",
+    "decimals_money": 2
+  },
+  "business_terms": {
+    "invoice": "Invoice",
+    "quote": "Quote",
+    "receipt": "Receipt",
+    "tax_name": "GST/HST",
+    "tax_rate_default": 13.0
+  }
+}

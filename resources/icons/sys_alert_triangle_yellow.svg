@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!-- Uploaded to: SVG Repo, www.svgrepo.com, Transformed by: SVG Repo Mixer Tools -->
+
+<svg
+   width="512.53748"
+   height="450.328"
+   viewBox="-0.96 -0.96 16.480304 14.48"
+   fill="none"
+   stroke="#ff0000"
+   stroke-width="0.48"
+   version="1.1"
+   id="svg1"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:svg="http://www.w3.org/2000/svg">
+  <defs
+     id="defs1" />
+  <g
+     id="SVGRepo_bgCarrier"
+     stroke-width="0"
+     transform="translate(-0.71981548,-1.7199999)" />
+  <g
+     id="SVGRepo_tracerCarrier"
+     stroke-linecap="round"
+     stroke-linejoin="round"
+     transform="translate(-0.71981548,-1.7199999)" />
+  <g
+     id="SVGRepo_iconCarrier"
+     transform="translate(-0.71981548,-1.7199999)">
+    <path
+       fill="#ffdd00"
+       fill-rule="evenodd"
+       d="M 8,1 A 2.143,2.143 0 0 0 6.173,2.024 l -5.88,9.768 a 2.125,2.125 0 0 0 0.762,2.915 c 0.322,0.188 0.687,0.289 1.06,0.293 h 11.77 a 2.143,2.143 0 0 0 1.834,-1.074 2.126,2.126 0 0 0 -0.006,-2.124 L 9.829,2.028 A 2.149,2.149 0 0 0 8,1 Z M 7,11 a 1,1 0 0 1 1,-1 h 0.007 a 1,1 0 1 1 0,2 H 8 A 1,1 0 0 1 7,11 Z M 8.75,5.75 a 0.75,0.75 0 0 0 -1.5,0 v 2.5 a 0.75,0.75 0 0 0 1.5,0 z"
+       clip-rule="evenodd"
+       id="path1" />
+  </g>
+</svg>

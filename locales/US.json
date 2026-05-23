@@ -1,0 +1,26 @@
+{
+  "_meta": {
+    "country": "United States",
+    "code": "US",
+    "flag_icon": "sys_cif_us",
+    "currency": "USD"
+  },
+  "tax_id": {
+    "label": "EIN/SSN",
+    "placeholder": "Ej: XX-XXXXXXX",
+    "mask": "##-#######"
+  },
+  "formats": {
+    "date": "MM/dd/yyyy",
+    "decimal_separator": ".",
+    "thousands_separator": ",",
+    "decimals_money": 2
+  },
+  "business_terms": {
+    "invoice": "Invoice",
+    "quote": "Quote",
+    "receipt": "Receipt",
+    "tax_name": "Sales Tax",
+    "tax_rate_default": 8.0
+  }
+}
