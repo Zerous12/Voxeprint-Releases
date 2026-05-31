@@ -11,7 +11,7 @@ Desktop software for 3D printing enthusiasts and small businesses. Generate quot
 ---
 ## Download
 
-👉 [Download the latest release](https://github.com/Zerous12/Voxeprint3D---Professional-3DPrint-Quote-PDF-Generator/releases/latest)
+👉 [Download the latest release](https://github.com/Zerous12/Voxeprint---3DPrint-Quote-Generator/releases/latest)
 
 ---
 
