@@ -110,39 +110,45 @@ class SystemTypeManager:
             if screen_height is not None:
                 # Ajuste por altura para Win: más compacto en 720p/768p.
                 if screen_height <= 720:
-                    return "90"
+                    return "82"
                 if screen_height <= 768:
-                    return "94"
-                if screen_height < 1080:
-                    return "100"
-                if screen_height >= 1440:
-                    return "116"
-                if screen_height >= 2160:
-                    return "126"
+                    return "89"
+                if screen_height <= 1200:    # Cubre 900p, 1080p (Full HD) y 1200p de forma segura
+                    return "96"
+                if screen_height <= 1600:   # Cubre 1440p (2K) y pantallas intermedias
+                    return "120"
+                if screen_height >= 2160:   # Cubre 4K UHD en adelante
+                    return "140"
             return "100"
 
         if SystemTypeManager.is_linux():
             screen_height = SystemTypeManager._get_linux_screen_height()
             if screen_height is not None:
                 if screen_height <= 720:
-                    return "90"
+                    return "82"
                 if screen_height <= 768:
-                    return "94"
+                    return "89"
             return None
 
         return None
 
     @staticmethod
     def _get_windows_screen_height() -> Optional[int]:
-        """Obtiene la altura principal de pantalla en Windows usando WinAPI."""
+        """Obtiene la altura FÍSICA de pantalla en Windows (ignora escalado del sistema)."""
         if not SystemTypeManager.is_windows():
             return None
 
         try:
             import ctypes
-            resolution = ctypes.windll.user32.GetSystemMetrics(1)
-            return int(resolution)
-        
+            # DESKTOPVERTRES (117) devuelve píxeles físicos reales, independiente del
+            # escalado DPI configurado en Windows (100%, 125%, 150%, etc.).
+            dc = ctypes.windll.user32.GetDC(0)
+            height = ctypes.windll.gdi32.GetDeviceCaps(dc, 117)
+            ctypes.windll.user32.ReleaseDC(0, dc)
+            if height and height > 0:
+                return int(height)
+            # Fallback: resolución lógica si GDI falla
+            return int(ctypes.windll.user32.GetSystemMetrics(1))
         except Exception:
             return None
 
@@ -168,10 +174,11 @@ class SystemTypeManager:
                     text=True,
                     encoding="utf-8",
                     errors="ignore",
+                    timeout=3,
                 )
 
                 if cmd[0] == "xrandr":
-                    # Formato común: "current 1920 x 1080"
+                    # Formato estándar: "Screen 0: ... current 1920 x 1080, ..."
                     match_current = re.search(r"current\s+\d+\s+x\s+(\d+)", output)
                     if match_current:
                         return int(match_current.group(1))
@@ -183,13 +190,28 @@ class SystemTypeManager:
                             if mode_match:
                                 return int(mode_match.group(2))
 
-                if cmd[0] == "xdpyinfo":
+                elif cmd[0] == "xdpyinfo":
                     match_dim = re.search(r"dimensions:\s+\d+x(\d+)", output)
                     if match_dim:
                         return int(match_dim.group(1))
 
             except Exception:
                 continue
+
+        # Fallback final: leer desde /sys/class/drm (funciona en X11 y Wayland)
+        try:
+            import glob
+            for modes_file in sorted(glob.glob("/sys/class/drm/*/modes")):
+                try:
+                    with open(modes_file, "r", encoding="utf-8") as f:
+                        first_mode = f.readline().strip()  # ej. "1920x1080"
+                    match = re.match(r"\d+x(\d+)", first_mode)
+                    if match:
+                        return int(match.group(1))
+                except Exception:
+                    continue
+        except Exception:
+            pass
 
         return None
 

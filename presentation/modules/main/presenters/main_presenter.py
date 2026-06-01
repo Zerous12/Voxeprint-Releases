@@ -476,9 +476,9 @@ class MainPresenter(QObject):
         
         file_path, _ = QFileDialog.getOpenFileName(
             self.view,
-            "Seleccionar archivo G-code o 3MF",
+            "Seleccionar archivo de impresión",
             get_user_start_dir(),
-            "Archivos de impresión (*.gcode *.3mf);;G-code (*.gcode);;3MF (*.3mf);;Todos (*.*)"
+            "Archivos de impresión (*.gcode *.bgcode *.3mf);;G-code (*.gcode);;BGcode - PrusaSlicer (*.bgcode);;3MF (*.3mf);;Todos (*.*)"
         )
         if not file_path:
             self.view.add_action_log("Carga de G-code cancelada")
