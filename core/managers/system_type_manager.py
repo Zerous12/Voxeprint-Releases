@@ -1,4 +1,7 @@
+import os
 import platform
+import re
+import subprocess
 import sys
 from pathlib import Path
 from typing import Optional
@@ -97,10 +100,97 @@ class SystemTypeManager:
     def get_font_dpi_env() -> Optional[str]:
         """
         Retorna el valor para QT_FONT_DPI según la plataforma.
-        Solo Windows necesita override de DPI.
+                - Linux: override solo en resoluciones bajas (720p/768p)
+                - macOS: sin override (usar autoescalado nativo)
+        - Windows: ajuste adaptativo por resolución para evitar UI demasiado grande
+          en pantallas bajas y mantener legibilidad en pantallas altas.
         """
         if SystemTypeManager.is_windows():
-            return "108"
+            screen_height = SystemTypeManager._get_windows_screen_height()
+            if screen_height is not None:
+                # Ajuste por altura para Win: más compacto en 720p/768p.
+                if screen_height <= 720:
+                    return "90"
+                if screen_height <= 768:
+                    return "94"
+                if screen_height < 1080:
+                    return "100"
+                if screen_height >= 1440:
+                    return "116"
+                if screen_height >= 2160:
+                    return "126"
+            return "100"
+
+        if SystemTypeManager.is_linux():
+            screen_height = SystemTypeManager._get_linux_screen_height()
+            if screen_height is not None:
+                if screen_height <= 720:
+                    return "90"
+                if screen_height <= 768:
+                    return "94"
+            return None
+
+        return None
+
+    @staticmethod
+    def _get_windows_screen_height() -> Optional[int]:
+        """Obtiene la altura principal de pantalla en Windows usando WinAPI."""
+        if not SystemTypeManager.is_windows():
+            return None
+
+        try:
+            import ctypes
+            resolution = ctypes.windll.user32.GetSystemMetrics(1)
+            return int(resolution)
+        
+        except Exception:
+            return None
+
+    @staticmethod
+    def _get_linux_screen_height() -> Optional[int]:
+        """Obtiene la altura principal de pantalla en Linux usando utilidades del sistema."""
+        if not SystemTypeManager.is_linux():
+            return None
+
+        if not os.environ.get("DISPLAY") and not os.environ.get("WAYLAND_DISPLAY"):
+            return None
+
+        commands = [
+            ["xrandr", "--current"],
+            ["xdpyinfo"],
+        ]
+
+        for cmd in commands:
+            try:
+                output = subprocess.check_output(
+                    cmd,
+                    stderr=subprocess.DEVNULL,
+                    text=True,
+                    encoding="utf-8",
+                    errors="ignore",
+                )
+
+                if cmd[0] == "xrandr":
+                    # Formato común: "current 1920 x 1080"
+                    match_current = re.search(r"current\s+\d+\s+x\s+(\d+)", output)
+                    if match_current:
+                        return int(match_current.group(1))
+
+                    # Fallback: línea de modo activo con asterisco, ej. "1366x768     60.00*+"
+                    for line in output.splitlines():
+                        if "*" in line:
+                            mode_match = re.search(r"(\d+)x(\d+)", line)
+                            if mode_match:
+                                return int(mode_match.group(2))
+
+                if cmd[0] == "xdpyinfo":
+                    match_dim = re.search(r"dimensions:\s+\d+x(\d+)", output)
+                    if match_dim:
+                        return int(match_dim.group(1))
+
+            except Exception:
+                continue
+
         return None
 
     @staticmethod
