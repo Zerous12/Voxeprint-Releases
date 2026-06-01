@@ -247,24 +247,24 @@ class Ui_Temp_Select_Filaments(object):
 
         self.gridLayout_2.addLayout(self.verticalLayout, 0, 0, 1, 1)
 
-        self.frame = QFrame(Temp_Select_Filaments)
-        self.frame.setObjectName(u"frame")
+        self.frame_container_selector = QFrame(Temp_Select_Filaments)
+        self.frame_container_selector.setObjectName(u"frame_container_selector")
         sizePolicy3 = QSizePolicy(QSizePolicy.Policy.Expanding, QSizePolicy.Policy.Expanding)
         sizePolicy3.setHorizontalStretch(0)
         sizePolicy3.setVerticalStretch(0)
-        sizePolicy3.setHeightForWidth(self.frame.sizePolicy().hasHeightForWidth())
-        self.frame.setSizePolicy(sizePolicy3)
-        self.frame.setMinimumSize(QSize(800, 420))
-        self.frame.setFrameShape(QFrame.Shape.StyledPanel)
-        self.frame.setFrameShadow(QFrame.Shadow.Raised)
-        self.gridLayout = QGridLayout(self.frame)
+        sizePolicy3.setHeightForWidth(self.frame_container_selector.sizePolicy().hasHeightForWidth())
+        self.frame_container_selector.setSizePolicy(sizePolicy3)
+        self.frame_container_selector.setMinimumSize(QSize(800, 420))
+        self.frame_container_selector.setFrameShape(QFrame.Shape.StyledPanel)
+        self.frame_container_selector.setFrameShadow(QFrame.Shadow.Raised)
+        self.gridLayout = QGridLayout(self.frame_container_selector)
         self.gridLayout.setSpacing(0)
         self.gridLayout.setObjectName(u"gridLayout")
         self.gridLayout.setContentsMargins(2, 2, 2, 10)
         self.horizontalLayout_3 = QHBoxLayout()
         self.horizontalLayout_3.setSpacing(4)
         self.horizontalLayout_3.setObjectName(u"horizontalLayout_3")
-        self.qtable_filament = QTableWidget(self.frame)
+        self.qtable_filament = QTableWidget(self.frame_container_selector)
         if (self.qtable_filament.columnCount() < 6):
             self.qtable_filament.setColumnCount(6)
         font4 = QFont()
@@ -365,7 +365,7 @@ class Ui_Temp_Select_Filaments(object):
 
         self.horizontalLayout_3.addWidget(self.qtable_filament)
 
-        self.line_separator = QFrame(self.frame)
+        self.line_separator = QFrame(self.frame_container_selector)
         self.line_separator.setObjectName(u"line_separator")
         self.line_separator.setFrameShape(QFrame.Shape.VLine)
         self.line_separator.setFrameShadow(QFrame.Shadow.Sunken)
@@ -374,7 +374,7 @@ class Ui_Temp_Select_Filaments(object):
 
         self.verticalLayout_2 = QVBoxLayout()
         self.verticalLayout_2.setObjectName(u"verticalLayout_2")
-        self.label_filament_details_title = QLabel(self.frame)
+        self.label_filament_details_title = QLabel(self.frame_container_selector)
         self.label_filament_details_title.setObjectName(u"label_filament_details_title")
         sizePolicy5 = QSizePolicy(QSizePolicy.Policy.MinimumExpanding, QSizePolicy.Policy.MinimumExpanding)
         sizePolicy5.setHorizontalStretch(0)
@@ -386,7 +386,7 @@ class Ui_Temp_Select_Filaments(object):
 
         self.verticalLayout_2.addWidget(self.label_filament_details_title)
 
-        self.textEdit_details_filament = QTextEdit(self.frame)
+        self.textEdit_details_filament = QTextEdit(self.frame_container_selector)
         self.textEdit_details_filament.setObjectName(u"textEdit_details_filament")
         self.textEdit_details_filament.setMinimumSize(QSize(230, 171))
         self.textEdit_details_filament.setStyleSheet(u"")
@@ -394,7 +394,7 @@ class Ui_Temp_Select_Filaments(object):
 
         self.verticalLayout_2.addWidget(self.textEdit_details_filament)
 
-        self.label_filament_stock = QLabel(self.frame)
+        self.label_filament_stock = QLabel(self.frame_container_selector)
         self.label_filament_stock.setObjectName(u"label_filament_stock")
         sizePolicy5.setHeightForWidth(self.label_filament_stock.sizePolicy().hasHeightForWidth())
         self.label_filament_stock.setSizePolicy(sizePolicy5)
@@ -403,7 +403,7 @@ class Ui_Temp_Select_Filaments(object):
 
         self.verticalLayout_2.addWidget(self.label_filament_stock)
 
-        self.label_filament_price = QLabel(self.frame)
+        self.label_filament_price = QLabel(self.frame_container_selector)
         self.label_filament_price.setObjectName(u"label_filament_price")
         sizePolicy5.setHeightForWidth(self.label_filament_price.sizePolicy().hasHeightForWidth())
         self.label_filament_price.setSizePolicy(sizePolicy5)
@@ -422,7 +422,7 @@ class Ui_Temp_Select_Filaments(object):
         self.horizontalLayout_5.setSpacing(0)
         self.horizontalLayout_5.setObjectName(u"horizontalLayout_5")
         self.horizontalLayout_5.setContentsMargins(2, -1, 2, -1)
-        self.groupBox_action = QGroupBox(self.frame)
+        self.groupBox_action = QGroupBox(self.frame_container_selector)
         self.groupBox_action.setObjectName(u"groupBox_action")
         sizePolicy6 = QSizePolicy(QSizePolicy.Policy.Preferred, QSizePolicy.Policy.Preferred)
         sizePolicy6.setHorizontalStretch(0)
@@ -518,7 +518,7 @@ class Ui_Temp_Select_Filaments(object):
         self.gridLayout.addLayout(self.horizontalLayout_5, 2, 0, 1, 1)
 
 
-        self.gridLayout_2.addWidget(self.frame, 1, 0, 1, 1)
+        self.gridLayout_2.addWidget(self.frame_container_selector, 1, 0, 1, 1)
 
 
         self.retranslateUi(Temp_Select_Filaments)
@@ -563,5 +563,4 @@ class Ui_Temp_Select_Filaments(object):
 #endif // QT_CONFIG(tooltip)
         self.btn_cancel_select.setText(QCoreApplication.translate("Temp_Select_Filaments", u"\u2715 Cancelar", None))
     # retranslateUi
-
 

@@ -9,6 +9,7 @@ from pathlib import Path
 from resources.theme import ThemeMode, ThemeColors, ColorRole
 from core.utils.path_helper import get_light_style_path, get_dark_style_path, get_qss_file_path
 from core.utils.logger import logger
+from core.managers.system_type_manager import SystemTypeManager
 
 # Import condicional de winreg (solo Windows)
 if sys.platform == 'win32':
@@ -130,12 +131,7 @@ class PaletteManager:
     
     def get_recommended_style_for_system(self):
         """Sugiere el mejor estilo según el sistema operativo."""
-        if self.is_windows_10():
-            return "windows11"  # Forzar estilo de Windows 11
-        elif self.is_windows_11():
-            return "windows11"  # Estilo nativo en Windows 11
-        else:
-            return "fusion"  # Fallback para otros sistemas
+        return SystemTypeManager.get_recommended_qt_style()
     
     def detect_dark_mode(self):
         """Detecta si el sistema está en modo oscuro (multiplataforma)."""

@@ -14,6 +14,10 @@ QFrame#frame_ajust{
 	border: none;
 	background-color: #D0E7E6;
 }
+QFrame#frame_container_selector,
+QFrame#frame_view {
+	background-color: rgb(248, 249, 250);
+}
 /* /////////////////////////////////////////////////////////////////////////////////////////////////
 Bg App */
 #bgApp{	
@@ -272,19 +276,19 @@ QPushButton#btn_toggle_panel:pressed {
 /* Final del estilo para botón de toggle panel */
 
 QPushButton#btn_github {
-background-color: transparent;
-border: none;
-image: url(:/resources/resources/icons/sys_github_icon.svg);
+	background-color: transparent;
+	border: none;
+	image: url(:/resources/resources/icons/sys_github_icon.svg);
 }
 
 QPushButton#btn_github:hover {
-background-color: #FFFFFF;
-border-radius: 12px;
+	background-color: #FFFFFF;
+	border-radius: 12px;
 }
 
 QPushButton#btn_github:pressed {
-background-color: #46aa8f;
-border-radius: 12px;
+	background-color: #46aa8f;
+	border-radius: 12px;
 }
 
 /* /////////////////////////////////////////////////////////////////////////////////////////////////
@@ -754,6 +758,14 @@ QTabWidget > QTabBar::tab:hover {
 }
 /* /////////////////////////////////////////////////////////////////////////////////////////////////
 QDoubleSpinBox */
+QDoubleSpinBox {
+	border-radius: 5px;
+	padding: 2px 2px 2px 8px;
+}
+QDoubleSpinBox:disabled {
+	border-radius: 5px;
+	padding: 2px 2px 2px 8px;
+}
 QDoubleSpinBox:down-button{		
 	image: url(:/resources/resources/icons/sys_arrow_down.svg);
 	background-color: #8894a8;
@@ -793,6 +805,14 @@ QDoubleSpinBox:up-button:pressed{
 }
 /* /////////////////////////////////////////////////////////////////////////////////////////////////
 QSpinBox */
+QSpinBox {
+	border-radius: 5px;
+	padding: 2px 2px 2px 8px;
+}
+QSpinBox:disabled {
+	border-radius: 5px;
+	padding: 2px 2px 2px 8px;
+}
 QSpinBox:down-button{		
 	image: url(:/resources/resources/icons/sys_arrow_down.svg);
 	background-color: #8894a8;
@@ -946,7 +966,6 @@ QLabel#label_printer_details_title {
 }
 
 /* TextEdit de detalles en diálogos */
-/* TextEdit de detalles en diálogos */
 QTextEdit#textEdit_details_filament,
 QTextEdit#textEdit_details_printer,
 QTextEdit#textEdit_details_quotes,
@@ -955,6 +974,24 @@ QTextEdit#textEdit_details_customer {
     border-radius: 5px;
     margin: 2px;
     padding: 8px;
+}
+
+QTextEdit#textEdit_details_printer_select,
+QTextEdit#textEdit_name_client_select,
+QTextEdit#textEdit_ruc_ci_client_select,
+QTextEdit#textEdit_details_filament_select,
+QTextEdit#textEdit_details_gcode,
+QTextEdit#textEdit_details_multi_filament_select {
+    background: transparent;
+}
+
+QTextEdit#textEdit_details_printer_select:focus,
+QTextEdit#textEdit_name_client_select:focus,
+QTextEdit#textEdit_ruc_ci_client_select:focus,
+QTextEdit#textEdit_details_filament_select:focus,
+QTextEdit#textEdit_details_gcode:focus,
+QTextEdit#textEdit_details_multi_filament_select:focus {
+    background: transparent;
 }
 
 /* Labels de información en diálogos */

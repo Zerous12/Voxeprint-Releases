@@ -7,7 +7,6 @@ from PySide6.QtWidgets import (QSizePolicy, QWidget, QVBoxLayout, QHBoxLayout, Q
                                 QAbstractItemView, QAbstractScrollArea, QDateEdit, QDoubleSpinBox, QToolButton,
                                 QScrollBar, QCalendarWidget, QRadioButton, QStackedWidget)
 
-
 class Ui_MainPanel(object):
     def setupUi(self, MainPanel):
         if not MainPanel.objectName():
@@ -1554,7 +1553,7 @@ class Ui_MainPanel(object):
         self.textEdit_name_client_select.setTextInteractionFlags(Qt.TextInteractionFlag.TextSelectableByMouse)
         self.textEdit_ruc_ci_client_select = QTextEdit(self.groupbox_client)
         self.textEdit_ruc_ci_client_select.setObjectName(u"textEdit_ruc_ci_client_select")
-        self.textEdit_ruc_ci_client_select.setGeometry(QRect(18, 62, 181, 22))
+        self.textEdit_ruc_ci_client_select.setGeometry(QRect(20, 62, 181, 22))
         self.textEdit_ruc_ci_client_select.setFont(font3)
         self.textEdit_ruc_ci_client_select.setFocusPolicy(Qt.FocusPolicy.NoFocus)
         self.textEdit_ruc_ci_client_select.setAcceptDrops(False)
@@ -1725,14 +1724,14 @@ class Ui_MainPanel(object):
         self.label_3.setFont(font3)
         self.label_minute = QLabel(self.groupbox_piece_info)
         self.label_minute.setObjectName(u"label_minute")
-        self.label_minute.setGeometry(QRect(140, 50, 61, 21))
+        self.label_minute.setGeometry(QRect(145, 50, 61, 21))
         self.label_minute.setFont(font3)
         self.spinbox_time_minute_piece = QSpinBox(self.groupbox_piece_info)
         self.spinbox_time_minute_piece.setObjectName(u"spinbox_time_minute_piece")
-        self.spinbox_time_minute_piece.setGeometry(QRect(210, 50, 71, 22))
+        self.spinbox_time_minute_piece.setGeometry(QRect(211, 50, 70, 22))
         sizePolicy4.setHeightForWidth(self.spinbox_time_minute_piece.sizePolicy().hasHeightForWidth())
         self.spinbox_time_minute_piece.setSizePolicy(sizePolicy4)
-        self.spinbox_time_minute_piece.setMaximumSize(QSize(71, 22))
+        self.spinbox_time_minute_piece.setMaximumSize(QSize(70, 22))
         self.spinbox_time_minute_piece.setFont(font3)
         self.spinbox_time_minute_piece.setButtonSymbols(QAbstractSpinBox.ButtonSymbols.UpDownArrows)
         self.spinbox_time_minute_piece.setMinimum(0)
@@ -1741,10 +1740,10 @@ class Ui_MainPanel(object):
         self.spinbox_time_minute_piece.setValue(0)
         self.spinbox_time_hour_piece = QSpinBox(self.groupbox_piece_info)
         self.spinbox_time_hour_piece.setObjectName(u"spinbox_time_hour_piece")
-        self.spinbox_time_hour_piece.setGeometry(QRect(65, 50, 71, 22))
+        self.spinbox_time_hour_piece.setGeometry(QRect(65, 50, 73, 22))
         sizePolicy4.setHeightForWidth(self.spinbox_time_hour_piece.sizePolicy().hasHeightForWidth())
         self.spinbox_time_hour_piece.setSizePolicy(sizePolicy4)
-        self.spinbox_time_hour_piece.setMaximumSize(QSize(71, 22))
+        self.spinbox_time_hour_piece.setMaximumSize(QSize(73, 22))
         self.spinbox_time_hour_piece.setFont(font3)
         self.spinbox_time_hour_piece.setButtonSymbols(QAbstractSpinBox.ButtonSymbols.UpDownArrows)
         self.spinbox_time_hour_piece.setMaximum(99999999)
@@ -1881,10 +1880,10 @@ class Ui_MainPanel(object):
         self.checkbox_advance.setCursor(QCursor(Qt.CursorShape.PointingHandCursor))
         self.spinbox_advance = QSpinBox(self.groupBox_advance)
         self.spinbox_advance.setObjectName(u"spinbox_advance")
-        self.spinbox_advance.setGeometry(QRect(110, 50, 71, 22))
+        self.spinbox_advance.setGeometry(QRect(105, 50, 76, 22))
         sizePolicy4.setHeightForWidth(self.spinbox_advance.sizePolicy().hasHeightForWidth())
         self.spinbox_advance.setSizePolicy(sizePolicy4)
-        self.spinbox_advance.setMaximumSize(QSize(71, 22))
+        self.spinbox_advance.setMaximumSize(QSize(76, 22))
         self.spinbox_advance.setFont(font3)
         self.spinbox_advance.setFocusPolicy(Qt.FocusPolicy.StrongFocus)
         self.spinbox_advance.setButtonSymbols(QAbstractSpinBox.ButtonSymbols.UpDownArrows)
@@ -3959,5 +3958,4 @@ class Ui_MainPanel(object):
         self.version.setText(QCoreApplication.translate("MainPanel", u"v1.1.2", None))
         self.btn_toggle_panel.setText("")
     # retranslateUi
-
 

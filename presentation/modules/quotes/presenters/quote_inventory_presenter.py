@@ -144,6 +144,9 @@ class QuoteInventoryPresenter(QObject):
         self.ui.datedit_desde.dateChanged.connect(self._on_date_filter_changed)
         self.ui.datedit_hasta.dateChanged.connect(self._on_date_filter_changed)
         
+        # Doble clic en tabla para abrir PDF
+        self.ui.qtable_quote.itemDoubleClicked.connect(self._on_open_clicked)
+        
         # Señales de botones de operaciones
         self.ui.btn_open_quote.clicked.connect(self._on_open_clicked)
         self.ui.btn_report_quotes.clicked.connect(self._on_export_clicked)
@@ -653,7 +656,7 @@ class QuoteInventoryPresenter(QObject):
     def _on_export_clicked(self):
         """Genera el reporte PDF de estadísticas usando el rango de fechas del filtro"""
         if not self.voxeprint_facade:
-            QMessageBox.warning(self.main_view, tr(I18N.Dialogs.ERROR_TITLE), "El sistema no está inicializado.")
+            QMessageBox.warning(self.main_view, tr(I18N.Dialogs.ERROR_TITLE), tr(I18N.Quote.INV_ERROR_NOT_INIT))
             return
 
         # Obtener rango de fechas de los filtros
@@ -681,7 +684,7 @@ class QuoteInventoryPresenter(QObject):
         """Trabajo pesado: consulta DB + genera PDF. Se ejecuta en hilo secundario."""
         response = self.voxeprint_facade.get_quote_stats(start_date, end_date)
         if not (hasattr(response, 'success') and response.success):
-            raise RuntimeError(getattr(response, 'message', 'Error desconocido'))
+            raise RuntimeError(getattr(response, 'message', tr(I18N.Quote.INV_ERROR_UNKNOWN)))
 
         stats_data = response.data
         if stats_data.get('quote_count', 0) == 0:
@@ -692,7 +695,7 @@ class QuoteInventoryPresenter(QObject):
 
         pdf_manager = StatsPDFManager()
         temp_file = tempfile.NamedTemporaryFile(
-            suffix='.pdf', prefix='Estadisticas_tmp_', delete=False
+            suffix='.pdf', prefix='Statistics_tmp_', delete=False
         )
         temp_path = temp_file.name
         temp_file.close()
@@ -710,8 +713,7 @@ class QuoteInventoryPresenter(QObject):
             logger.log_exception("QuoteInventoryPresenter", error, "_on_stats_ready")
             QMessageBox.critical(
                 self.main_view, tr(I18N.Dialogs.ERROR_TITLE),
-                "No se pudieron obtener las estadísticas.\n"
-                "Revise los logs para más detalles.")
+                tr(I18N.Quote.INV_ERROR_STATS))
             return
 
         if result is None:
@@ -721,19 +723,28 @@ class QuoteInventoryPresenter(QObject):
                 tr(I18N.Quote.INV_NO_DATA, start=start_date, end=end_date))
             return
 
+
         temp_path = result['path']
         stats_data = result['stats']
 
         self._update_status_message(
-            f"Reporte generado: {stats_data['quote_count']} presupuestos analizados")
+            tr(I18N.Quote.INV_STATUS_REPORT, count=stats_data['quote_count']))
 
         from presentation.modules.visualizer.views.saved_quote_pdf_viewer import SavedQuotePDFViewer
 
-        report_label = f"Estadísticas {start_date} a {end_date}"
+        # Compactar fechas a formato 'YYYY-MM a YYYY-MM'
+        try:
+            start_label = start_date[:7]  # 'YYYY-MM'
+            end_label = end_date[:7]      # 'YYYY-MM'
+            report_label = f"{start_label} - {end_label}"
+        except Exception:
+            report_label = f"{start_date} - {end_date}"
+
         viewer = SavedQuotePDFViewer(
             pdf_path=temp_path,
             quote_number=report_label,
-            parent=self.main_view
+            parent=self.main_view,
+            is_report=True
         )
         viewer.exec()
 
@@ -798,7 +809,7 @@ class QuoteInventoryPresenter(QObject):
                 else:
                     QMessageBox.warning(
                         self.main_view,
-                        "Error",
+                        tr(I18N.Dialogs.ERROR_TITLE),
                         response.message
                     )
                     
@@ -807,7 +818,7 @@ class QuoteInventoryPresenter(QObject):
                 QMessageBox.critical(
                     self.main_view,
                     tr(I18N.Dialogs.ERROR_TITLE),
-                    "Error al eliminar presupuesto.\n\nRevise el archivo de log para más detalles."
+                    tr(I18N.Quote.INV_ERROR_DELETE)
                 )
     
     def refresh(self):

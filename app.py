@@ -19,17 +19,20 @@ else:
 from config.build_config import BUILD_CONFIG
 from core.managers.theme_manager import PaletteManager
 from core.managers.app_preferences_manager import AppPreferencesManager
+from core.managers.system_type_manager import SystemTypeManager
 from core.utils.path_helper import logs_dir
-from core.utils.logger import error, log_exception, logger, info, warning, debug
+from core.utils.logger import logger
 from core.managers.language_manager import LanguageManager
 from core.managers.locale_manager import LocaleManager
+from core.utils.translation_helper import tr
+from core.utils.translation_keys import I18N
 from presentation.modules.intro.presenters.intro_presenter import IntroPresenter
 from presentation.modules.resources_rc import *
 
 def _exe_dir() -> Path:
     return Path(sys.executable).parent if getattr(sys, "frozen", False) else Path(__file__).resolve().parent
 
-ICON_PATH = _exe_dir() / "icon.ico"
+ICON_PATH = SystemTypeManager.get_icon_path(_exe_dir())
 
 
 def _show_fatal_error_dialog(title: str, message: str, log_dir=None) -> None:
@@ -42,8 +45,8 @@ def _show_fatal_error_dialog(title: str, message: str, log_dir=None) -> None:
 
     btn_logs = None
     if log_dir is not None:
-        btn_logs = msg.addButton("Ver Logs", QMessageBox.ButtonRole.ActionRole)
-    btn_close = msg.addButton("Cerrar", QMessageBox.ButtonRole.RejectRole)
+        btn_logs = msg.addButton(tr(I18N.Errors.BTN_VIEW_LOGS), QMessageBox.ButtonRole.ActionRole)
+    btn_close = msg.addButton(tr(I18N.Dialogs.CLOSE), QMessageBox.ButtonRole.RejectRole)
     msg.setDefaultButton(btn_close)
     msg.exec()
 
@@ -61,8 +64,8 @@ def excepthook(exc_type, exc, tb):
         exception.__traceback__ = tb
         
         # Registrar el error usando el sistema de logging centralizado
-        error("GlobalExceptionHandler", f"Excepción no capturada: {exc_type.__name__}: {str(exc)}")
-        log_exception("GlobalExceptionHandler", exception, "excepthook global")
+        logger.error("GlobalExceptionHandler", f"Excepción no capturada: {exc_type.__name__}: {str(exc)}")
+        logger.log_exception("GlobalExceptionHandler", exception, "excepthook global")
         
         # Obtener la ruta del archivo de log para mostrar al usuario
         from datetime import datetime
@@ -71,10 +74,8 @@ def excepthook(exc_type, exc, tb):
         # Mostrar mensaje de error al usuario (simplificado, sin detalles técnicos)
         try:
             _show_fatal_error_dialog(
-                "Error inesperado",
-                f"Ocurrió un error crítico y la aplicación debe cerrarse.\n\n"
-                f"Los detalles del error se han registrado en:\n"
-                f"{log_file}",
+                tr(I18N.Errors.FATAL_TITLE),
+                tr(I18N.Errors.FATAL_MSG, path=str(log_file)),
                 log_dir=log_file.parent
             )
         except Exception:
@@ -90,9 +91,8 @@ def excepthook(exc_type, exc, tb):
         
         try:
             _show_fatal_error_dialog(
-                "Error inesperado",
-                f"Ocurrió un error crítico y la aplicación debe cerrarse.\n\n"
-                f"Se guardaron detalles en:\n{log_file}",
+                tr(I18N.Errors.FATAL_TITLE),
+                tr(I18N.Errors.FATAL_MSG_FALLBACK, path=str(log_file)),
                 log_dir=log_file.parent
             )
         except Exception:
@@ -101,7 +101,18 @@ def excepthook(exc_type, exc, tb):
     sys.exit(1)
 #////////////////////////////////////////////////////////////////////////////////////////////////////////
 sys.excepthook = excepthook
-os.environ["QT_FONT_DPI"] = "108"  # Solucionar problemas con DPI alto y escalas por encima del 100%
+font_dpi = SystemTypeManager.get_font_dpi_env()
+if font_dpi is not None:
+    os.environ["QT_FONT_DPI"] = font_dpi
+
+# QtWebEngine: configurar variables de entorno según plataforma y empaquetado
+for key, value in SystemTypeManager.get_qtwebengine_env_vars(
+    frozen=getattr(sys, 'frozen', False),
+    meipass=getattr(sys, '_MEIPASS', None)
+).items():
+    os.environ.setdefault(key, value)
+# Obligatorio para QtWebEngine: compartir contextos OpenGL antes de crear QApplication
+QCoreApplication.setAttribute(Qt.ApplicationAttribute.AA_ShareOpenGLContexts)
 #////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 
@@ -112,61 +123,22 @@ def check_system_compatibility():
     - Windows 8 o superior
     - macOS 10.14 (Mojave) o superior
     - Linux: cualquier versión moderna con Qt6 support
-    
+
     Returns:
         tuple: (es_compatible, mensaje_error)
     """
-    system = platform.system()
-    
-    if system == "Windows":
-        # Verificar versión de Windows
-        try:
-            version = platform.version()  # Ej: "10.0.19041"
-            release = platform.release()  # Ej: "10", "8.1", "7"
-            
-            # Windows 7 y anteriores no son compatibles
-            if release == "7":
-                return False, (
-                    "Windows 7 no es compatible con Voxeprint.\n\n"
-                    "Requisito mínimo: Windows 8 o superior.\n\n"
-                    "Recomendamos actualizar a Windows 10 u 11 para mejor experiencia."
-                )
-            
-            # Windows Vista y XP (release sería "Vista", "XP", etc.)
-            if release in ["Vista", "XP", "2000", "NT"]:
-                return False, (
-                    f"Windows {release} no es compatible con Voxeprint.\n\n"
-                    "Requisito mínimo: Windows 8 o superior."
-                )
-                
-        except Exception:
-            pass  # Si no podemos detectar, asumimos compatible
-            
-    elif system == "Darwin":  # macOS
-        try:
-            mac_ver = platform.mac_ver()[0]  # Ej: "10.14.6", "11.0", "14.0"
-            if mac_ver:
-                parts = mac_ver.split('.')
-                major = int(parts[0])
-                minor = int(parts[1]) if len(parts) > 1 else 0
-                
-                # macOS 10.13 (High Sierra) y anteriores no son compatibles
-                # macOS 11+ (Big Sur) siempre es compatible
-                if major == 10 and minor < 14:
-                    return False, (
-                        f"macOS {mac_ver} no es compatible con Voxeprint.\n\n"
-                        "Requisito mínimo: macOS 10.14 (Mojave) o superior.\n\n"
-                        "Recomendamos actualizar a macOS Monterey o superior."
-                    )
-                    
-        except Exception:
-            pass  # Si no podemos detectar, asumimos compatible
-            
-    elif system == "Linux":
-        # Linux: generalmente compatible si Qt6 funciona
-        # Podríamos verificar glibc o kernel, pero Qt6 ya lo hace
-        pass
-    
+    if SystemTypeManager.is_windows():
+        ok, key = SystemTypeManager.check_windows_compatibility()
+        if not ok:
+            if key == "WIN_LEGACY":
+                return False, tr(I18N.SystemCheck.WIN_LEGACY, release=platform.release())
+            return False, tr(getattr(I18N.SystemCheck, key))
+
+    elif SystemTypeManager.is_macos():
+        ok, key, ver = SystemTypeManager.check_macos_compatibility()
+        if not ok:
+            return False, tr(I18N.SystemCheck.MACOS, version=ver)
+
     return True, None
 
 
@@ -176,37 +148,37 @@ class AppSentinel:
     def __init__(self, lockfile_name='voxeprint_app.lock'):
         self.lockfile_path = os.path.join(tempfile.gettempdir(), lockfile_name)
         self.filepath = None
+        self._released = False
     
     def acquire(self):
         try:
             self.filepath = open(self.lockfile_path, 'w')
             
             if sys.platform == 'win32':
-                # Windows: usar msvcrt
                 msvcrt.locking(self.filepath.fileno(), msvcrt.LK_NBLCK, 1)
             else:
-                # Linux/macOS: usar fcntl
                 fcntl.flock(self.filepath.fileno(), fcntl.LOCK_EX | fcntl.LOCK_NB)
                 
         except (OSError, IOError):
             app = QApplication.instance() or QApplication([])
-            QMessageBox.warning(None, "Instancia en ejecución", "La aplicación ya está en ejecución.")
+            QMessageBox.warning(None, tr(I18N.Dialogs.ERROR_TITLE), tr(I18N.SystemCheck.APP_RUNNING))
             sys.exit(1)
 
     def release(self):
-        if self.filepath:
-            try:
-                if sys.platform != 'win32':
-                    # Linux/macOS: liberar el lock explícitamente
+        if self._released or not self.filepath:
+            return
+        self._released = True
+        try:
+            if sys.platform != 'win32':
+                try:
                     fcntl.flock(self.filepath.fileno(), fcntl.LOCK_UN)
-                
-                self.filepath.close()
-                
-                # Verificar si el archivo existe antes de intentar eliminarlo
-                if os.path.exists(self.lockfile_path):
-                    os.remove(self.lockfile_path)
-            except Exception as e:
-                logger.log_exception("AppSentinel", e, "release")
+                except Exception:
+                    pass
+            self.filepath.close()
+            if os.path.exists(self.lockfile_path):
+                os.remove(self.lockfile_path)
+        except Exception as e:
+            logger.log_exception("AppSentinel", e, "release")
 
 class App():
     def __init__(self):
@@ -240,6 +212,7 @@ class App():
         # Inicializar managers de i18n/l10n
         self.language_manager = LanguageManager()
         self.locale_manager = LocaleManager()
+        self.app.language_manager = self.language_manager
         
         # Leer preferencias de idioma y locale (o usar defaults)
         saved_language = self.preferences_manager.get_preference("appearance", "language", "es")
@@ -276,12 +249,12 @@ class App():
         try:
             # Intentar cargar tema desde preferencias
             user_theme = self.preferences_manager.get_theme()
-            debug("ThemeManager", f"Tema configurado en preferencias: {user_theme}")
+            logger.debug("ThemeManager", f"Tema configurado en preferencias: {user_theme}")
             
             # Validar que el tema configurado sea válido
             valid_themes = ["auto", "light", "dark"]
             if user_theme not in valid_themes:
-                warning("ThemeManager", f"Tema inválido '{user_theme}', usando 'dark' por defecto")
+                logger.warning("ThemeManager", f"Tema inválido '{user_theme}', usando 'dark' por defecto")
                 user_theme = "dark"
                 # Guardar el tema corregido en preferencias
                 self.preferences_manager.set_theme("dark")
@@ -289,11 +262,11 @@ class App():
             
             # Aplicar el tema configurado
             self.palette_manager.set_theme_mode(self.app, user_theme)
-            debug("ThemeManager", f"Tema aplicado correctamente: {user_theme}")
+            logger.debug("ThemeManager", f"Tema aplicado correctamente: {user_theme}")
             
         except Exception as e:
-            error("ThemeManager", f"Error cargando tema desde preferencias: {str(e)}")
-            warning("ThemeManager", "Aplicando tema oscuro por defecto como fallback")
+            logger.error("ThemeManager", f"Error cargando tema desde preferencias: {str(e)}")
+            logger.warning("ThemeManager", "Aplicando tema oscuro por defecto como fallback")
             
             try:
                 # Si hay error cargando preferencias, usar tema oscuro por defecto
@@ -303,11 +276,11 @@ class App():
                 # Intentar guardar tema por defecto en preferencias
                 self.preferences_manager.set_theme("dark")
                 self.preferences_manager.save_preferences()
-                info("ThemeManager", "Tema oscuro aplicado como fallback exitosamente")
+                logger.info("ThemeManager", "Tema oscuro aplicado como fallback exitosamente")
                 
             except Exception as fallback_error:
-                error("ThemeManager", f"Error crítico aplicando tema por defecto: {str(fallback_error)}")
-                log_exception("ThemeManager", fallback_error, "_initialize_theme fallback")
+                logger.error("ThemeManager", f"Error crítico aplicando tema por defecto: {str(fallback_error)}")
+                logger.log_exception("ThemeManager", fallback_error, "_initialize_theme fallback")
                 # En caso extremo, continuar sin tema personalizado         
         
     def launch_main_panel(self):
@@ -327,15 +300,15 @@ class App():
             self.main_presenter.run()
 
         except Exception as e:
-            error("App", f"Error crítico al lanzar panel principal: {str(e)}")
-            log_exception("App", e, "launch_main_panel")
+            logger.error("App", f"Error crítico al lanzar panel principal: {str(e)}")
+            logger.log_exception("App", e, "launch_main_panel")
             # Asegurar cierre del intro por si acaso (doble seguridad)
             if self.intro_presenter:
                 self.intro_presenter.close()
                 self.intro_presenter = None
             _show_fatal_error_dialog(
-                "Error de Inicio",
-                "Error al inicializar la aplicación.",
+                tr(I18N.Intro.ERROR_TITLE),
+                tr(I18N.Intro.ERROR_TEXT),
                 log_dir=logs_dir()
             )
             self.app.quit()    
@@ -349,8 +322,8 @@ class App():
             self._initialize_theme()
             return True
         except Exception as e:
-            error("ThemeManager", f"Error aplicando tema desde preferencias: {str(e)}")
-            log_exception("ThemeManager", e, "apply_theme_from_preferences")
+            logger.error("ThemeManager", f"Error aplicando tema desde preferencias: {str(e)}")
+            logger.log_exception("ThemeManager", e, "apply_theme_from_preferences")
             return False
     
     def get_current_theme_info(self) -> dict:
@@ -368,39 +341,42 @@ class App():
                 'available_modes': self.palette_manager.get_available_theme_modes(),
                 'qss_info': self.palette_manager.get_current_theme_info()
             }
-            debug("ThemeManager", "Información del tema obtenida correctamente", **theme_info)
+            logger.debug("ThemeManager", "Información del tema obtenida correctamente", **theme_info)
             return theme_info
         except Exception as e:
-            error("ThemeManager", f"Error obteniendo información del tema: {str(e)}")
-            log_exception("ThemeManager", e, "get_current_theme_info")
+            logger.error("ThemeManager", f"Error obteniendo información del tema: {str(e)}")
+            logger.log_exception("ThemeManager", e, "get_current_theme_info")
             return {}
 
     def run(self):
-        try:            
+        try:
             exit_code = self.app.exec()
-            self.applock.release()
             sys.exit(exit_code)
         except SystemExit:
-            self.applock.release()           
+            pass
         except Exception as e:
-            error("App", f"Error en ejecución principal: {str(e)}")
-            log_exception("App", e, "run")
+            logger.error("App", f"Error en ejecución principal: {str(e)}")
+            logger.log_exception("App", e, "run")
+        finally:
             self.applock.release()
 
     
 #////////////////////////////////////////////////Main/////////////////////////////////////////////////////
 def _run():
+    # Cargar idioma por defecto para que tr() funcione en check_system_compatibility
+    lang_mgr = LanguageManager()
+    lang_mgr.load_language("es")
+    
     # Verificar compatibilidad del sistema ANTES de crear la aplicación
     is_compatible, error_message = check_system_compatibility()
     
     if not is_compatible:
-        # Crear app mínima solo para mostrar el mensaje
         temp_app = QApplication([])
         
         msg = QMessageBox()
-        msg.setWindowTitle("Sistema no compatible")
+        msg.setWindowTitle(tr(I18N.SystemCheck.TITLE_UNSUPPORTED))
         msg.setIcon(QMessageBox.Icon.Critical)
-        msg.setText("<b>Voxeprint no puede ejecutarse en este sistema</b>")
+        msg.setText(f"<b>{tr(I18N.SystemCheck.HEADER_UNSUPPORTED)}</b>")
         msg.setInformativeText(error_message)
         msg.setStandardButtons(QMessageBox.StandardButton.Ok)
         msg.setStyleSheet("""

@@ -14,6 +14,11 @@ QFrame#frame_ajust{
 	border: none;
 	background-color: #026467;
 }
+QFrame#frame_container_selector,
+QFrame#frame_view {
+	background-color: rgb(45, 46, 46);
+}
+
 /* /////////////////////////////////////////////////////////////////////////////////////////////////
 Bg App */
 #bgApp{	
@@ -748,6 +753,14 @@ QTabWidget > QTabBar::tab:hover {
 }
 /* /////////////////////////////////////////////////////////////////////////////////////////////////
 QDoubleSpinBox */
+QDoubleSpinBox {
+	border-radius: 5px;
+	padding: 2px 2px 2px 8px;
+}
+QDoubleSpinBox:disabled {
+	border-radius: 5px;
+	padding: 2px 2px 2px 8px;
+}
 QDoubleSpinBox:down-button{		
 	image: url(:/resources/resources/icons/sys_arrow_down.svg);
 	background-color: rgb(33, 37, 43);   
@@ -786,6 +799,14 @@ QDoubleSpinBox:up-button:pressed{
 }
 /* /////////////////////////////////////////////////////////////////////////////////////////////////
 QSpinBox */
+QSpinBox {
+	border-radius: 5px;
+	padding: 2px 2px 2px 8px;
+}
+QSpinBox:disabled {
+	border-radius: 5px;
+	padding: 2px 2px 2px 8px;
+}
 QSpinBox:down-button{		
 	image: url(:/resources/resources/icons/sys_arrow_down.svg);
 	background-color: rgb(33, 37, 43);
@@ -945,6 +966,24 @@ QTextEdit#textEdit_details_customer {
     border-radius: 5px;
     margin: 2px;
     padding: 8px;
+}
+
+QTextEdit#textEdit_details_printer_select,
+QTextEdit#textEdit_name_client_select,
+QTextEdit#textEdit_ruc_ci_client_select,
+QTextEdit#textEdit_details_filament_select,
+QTextEdit#textEdit_details_gcode,
+QTextEdit#textEdit_details_multi_filament_select {
+    background: transparent;
+}
+
+QTextEdit#textEdit_details_printer_select:focus,
+QTextEdit#textEdit_name_client_select:focus,
+QTextEdit#textEdit_ruc_ci_client_select:focus,
+QTextEdit#textEdit_details_filament_select:focus,
+QTextEdit#textEdit_details_gcode:focus,
+QTextEdit#textEdit_details_multi_filament_select:focus {
+    background: transparent;
 }
 
 /* Labels de información en diálogos */

@@ -75,7 +75,7 @@ class AppPreferencesDialog(QDialog):
         """Configura la interfaz de usuario"""
         # Configurar ventana
         self.setWindowTitle(tr(I18N.App.PREFERENCES_DIALOG_TITLE))
-        self.setWindowIcon(QIcon("resources/icons/sys_adm_user.svg"))
+        self.setWindowIcon(QIcon(":/resources/resources/icons/sys_adm_user.svg"))
         self.setModal(True)
         self.setFixedSize(550, 450)
         
@@ -116,8 +116,8 @@ class AppPreferencesDialog(QDialog):
         layout.setSpacing(10)
         
         # Grupo: Configuración de Inicio (Combina cliente e impresora)
-        startup_group = QGroupBox("Configuración de Inicio")
-        startup_layout = QFormLayout(startup_group)
+        startup_group = QGroupBox(tr(I18N.Prefs.GROUP_STARTUP))
+        startup_layout = QGridLayout(startup_group)
         startup_layout.setVerticalSpacing(8)
         
         # Cliente
@@ -128,26 +128,28 @@ class AppPreferencesDialog(QDialog):
             tr(I18N.Prefs.OPTION_CLIENT_OPTIONAL),
             tr(I18N.Prefs.OPTION_CLIENT_DEFAULT)
         ])
-        startup_layout.addRow(tr(I18N.Prefs.LABEL_CLIENT_MODE), self.customer_mode_combo)
+        startup_layout.addWidget(QLabel(tr(I18N.Prefs.LABEL_CLIENT_MODE)), 0, 0)
+        startup_layout.addWidget(self.customer_mode_combo, 0, 1)
         
         # Impresora
 
         self.printer_mode_combo = QComboBox()
         # Las opciones se llenan desde el presenter
-        startup_layout.addRow(tr(I18N.Prefs.LABEL_DEFAULT_PRINTER), self.printer_mode_combo)
+        startup_layout.addWidget(QLabel(tr(I18N.Prefs.LABEL_DEFAULT_PRINTER)), 1, 0)
+        startup_layout.addWidget(self.printer_mode_combo, 1, 1)
         
         # Modo de generación por defecto
         self.default_generate_mode_combo = QComboBox()
         self.default_generate_mode_combo.addItem(tr(I18N.Prefs.OPTION_GENERATE_PDF), "pdf")
         self.default_generate_mode_combo.addItem(tr(I18N.Prefs.OPTION_GENERATE_NOTE), "note")
-        startup_layout.addRow(tr(I18N.Prefs.LABEL_GENERATE_BTN_MODE), self.default_generate_mode_combo)
+        startup_layout.addWidget(QLabel(tr(I18N.Prefs.LABEL_GENERATE_BTN_MODE)), 2, 0)
+        startup_layout.addWidget(self.default_generate_mode_combo, 2, 1)
         
         layout.addWidget(startup_group)
         
         # Grupo: Tema
         theme_group = QGroupBox(tr(I18N.Prefs.GROUP_THEME))
-        theme_layout = QFormLayout(theme_group)
-        theme_layout.setVerticalSpacing(8)
+        theme_layout = QGridLayout(theme_group)
         
         self.theme_combo = QComboBox()
         self.theme_combo.addItems([
@@ -155,27 +157,29 @@ class AppPreferencesDialog(QDialog):
             tr(I18N.Prefs.OPTION_THEME_LIGHT),
             tr(I18N.Prefs.OPTION_THEME_DARK)
         ])
-        theme_layout.addRow(tr(I18N.Prefs.LABEL_INTERFACE_THEME), self.theme_combo)
+        theme_layout.addWidget(QLabel(tr(I18N.Prefs.LABEL_INTERFACE_THEME)), 0, 0)
+        theme_layout.addWidget(self.theme_combo, 0, 1)
         
         layout.addWidget(theme_group)
         
         # Grupo: Actualizaciones
         updates_group = QGroupBox(tr(I18N.Prefs.GROUP_UPDATES))
-        updates_layout = QFormLayout(updates_group)
-        updates_layout.setVerticalSpacing(8)
+        updates_layout = QGridLayout(updates_group)
         
         self.update_check_mode = QComboBox()
         self.update_check_mode.addItem(tr(I18N.Prefs.OPTION_UPDATE_AUTO), "auto")
         self.update_check_mode.addItem(tr(I18N.Prefs.OPTION_UPDATE_MANUAL), "manual")
         self.update_check_mode.currentIndexChanged.connect(self._on_update_mode_changed)
-        updates_layout.addRow(tr(I18N.Prefs.LABEL_UPDATE_MODE), self.update_check_mode)
+        updates_layout.addWidget(QLabel(tr(I18N.Prefs.LABEL_UPDATE_MODE)), 0, 0)
+        updates_layout.addWidget(self.update_check_mode, 0, 1)
         
         self.update_check_frequency = QComboBox()
         self.update_check_frequency.addItem(tr(I18N.Prefs.OPTION_FREQ_AT_START), "startup")
         self.update_check_frequency.addItem(tr(I18N.Prefs.OPTION_FREQ_7_DAYS), "7days")
         self.update_check_frequency.addItem(tr(I18N.Prefs.OPTION_FREQ_15_DAYS), "15days")
         self.update_check_frequency.addItem(tr(I18N.Prefs.OPTION_FREQ_30_DAYS), "30days")
-        updates_layout.addRow(tr(I18N.Prefs.LABEL_UPDATE_FREQUENCY), self.update_check_frequency)
+        updates_layout.addWidget(QLabel(tr(I18N.Prefs.LABEL_UPDATE_FREQUENCY)), 1, 0)
+        updates_layout.addWidget(self.update_check_frequency, 1, 1)
         
         layout.addWidget(updates_group)
         
@@ -195,7 +199,7 @@ class AppPreferencesDialog(QDialog):
 
         # Grupo: Modo de Anticipo
         mode_group = QGroupBox(tr(I18N.Prefs.GROUP_ADVANCE_MODE))
-        mode_layout = QFormLayout(mode_group)
+        mode_layout = QGridLayout(mode_group)
 
         self.advance_mode_combo = QComboBox()
         # Usar claves de traducción para cada opción del modo de anticipo
@@ -206,17 +210,20 @@ class AppPreferencesDialog(QDialog):
             tr(I18N.Prefs.OPTION_ADVANCE_MODE_3),
             tr(I18N.Prefs.OPTION_ADVANCE_MODE_4),
         ])
-        mode_layout.addRow(tr(I18N.Prefs.LABEL_ADVANCE_MODE), self.advance_mode_combo)
+        mode_layout.addWidget(QLabel(tr(I18N.Prefs.LABEL_ADVANCE_MODE)), 0, 0)
+        mode_layout.addWidget(self.advance_mode_combo, 0, 1)
         layout.addWidget(mode_group)
 
         # Grupo: Configuración por defecto
         default_group = QGroupBox(tr(I18N.Prefs.GROUP_ADVANCE_DEFAULT))
-        default_layout = QFormLayout(default_group)
+        default_layout = QGridLayout(default_group)
 
         self.advance_default_percentage = QSpinBox()
+        self.advance_default_percentage.setMinimumHeight(22)
         self.advance_default_percentage.setRange(1, 100)
         self.advance_default_percentage.setSuffix("%")
-        default_layout.addRow(tr(I18N.Prefs.LABEL_ADVANCE_PCT), self.advance_default_percentage)
+        default_layout.addWidget(QLabel(tr(I18N.Prefs.LABEL_ADVANCE_PCT)), 0, 0)
+        default_layout.addWidget(self.advance_default_percentage, 0, 1)
         layout.addWidget(default_group)
 
         # Grupo: Anticipo automático para montos bajos
@@ -224,11 +231,13 @@ class AppPreferencesDialog(QDialog):
         min_layout = QGridLayout(min_group)
 
         self.auto_min_amount = CurrencyAwareSpinBox()
+        self.auto_min_amount.setMinimumHeight(22)
         self.auto_min_amount.setRange(0, 10000000)
         min_layout.addWidget(QLabel(tr(I18N.Prefs.LABEL_ADVANCE_MIN_AMOUNT)), 0, 0)
         min_layout.addWidget(self.auto_min_amount, 0, 1)
 
         self.auto_min_percentage = QSpinBox()
+        self.auto_min_percentage.setMinimumHeight(22)
         self.auto_min_percentage.setRange(1, 100)
         self.auto_min_percentage.setSuffix("%")
         min_layout.addWidget(QLabel(tr(I18N.Prefs.LABEL_ADVANCE_PCT)), 1, 0)
@@ -241,11 +250,13 @@ class AppPreferencesDialog(QDialog):
         max_layout = QGridLayout(max_group)
 
         self.auto_max_amount = CurrencyAwareSpinBox()
+        self.auto_max_amount.setMinimumHeight(22)
         self.auto_max_amount.setRange(0, 10000000)
         max_layout.addWidget(QLabel(tr(I18N.Prefs.LABEL_ADVANCE_MAX_AMOUNT)), 0, 0)
         max_layout.addWidget(self.auto_max_amount, 0, 1)
 
         self.auto_max_percentage = QSpinBox()
+        self.auto_max_percentage.setMinimumHeight(22)
         self.auto_max_percentage.setRange(1, 100)
         self.auto_max_percentage.setSuffix("%")
         max_layout.addWidget(QLabel(tr(I18N.Prefs.LABEL_ADVANCE_PCT)), 1, 0)

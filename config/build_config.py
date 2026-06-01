@@ -3,6 +3,7 @@ Parámetros de construcción y versión de Voxeprint.
 Centraliza información de builds, releases y metadatos del proyecto.
 """
 
+import platform
 from dataclasses import dataclass
 from typing import Optional
 import datetime
@@ -15,11 +16,12 @@ from config.app_config import DatabaseParameters
 class ApplicationParameters:
     """Parámetros básicos de la aplicación"""
     name: str = "Voxeprint"
+    data_dir_name: str = "voxeprint"
     display_name: str = "Voxeprint - Tu Asistente generador de Cotizaciones"
     description: str = "Calculadora profesional para impresión 3D"
-    version: str = "1.2.4"
-    build_number: int = 132
-    release_date: str = "2026.05.23"
+    version: str = "1.2.8"
+    build_number: int = 136
+    release_date: str = "2026.05.31"
     
     # Información del desarrollador/organización
     author: str = "Richard Mequert"
@@ -110,15 +112,15 @@ class BuildParameters:
 @dataclass(frozen=True)
 class ReleaseParameters:
     """Parámetros de release y distribución"""
-    channel: str = "beta"  # stable, beta, alpha, dev
+    channel: str = "stable"  # stable, beta, alpha, dev
     distribution_type: str = "standalone"  # standalone, installer, portable
     auto_update_enabled: bool = True
     update_check_interval: int = 24  # horas
     
     # URLs de distribución (Repo público para releases)
-    download_url: str = "https://github.com/Zerous12/Voxeprint3D---Professional-3DPrint-Quote-PDF-Generator/releases"
-    update_server: str = "https://api.github.com/repos/Zerous12/Voxeprint3D---Professional-3DPrint-Quote-PDF-Generator/releases"
-    documentation_url: str = "https://github.com/Zerous12/Voxeprint3D---Professional-3DPrint-Quote-PDF-Generator"
+    download_url: str = "https://github.com/Zerous12/Voxeprint---3DPrint-Quote-Generator/releases"
+    update_server: str = "https://api.github.com/repos/Zerous12/Voxeprint---3DPrint-Quote-Generator/releases"
+    documentation_url: str = "https://github.com/Zerous12/Voxeprint---3DPrint-Quote-Generator"
     
     # Configuración de telemetría
     telemetry_enabled: bool = False
@@ -136,6 +138,7 @@ class BuildConfig:
         self._team = TeamParameters()
         self._database = DatabaseParameters()
         self._build = BuildParameters()
+        object.__setattr__(self._build, 'target_platform', platform.system())
         self._release = ReleaseParameters()
     
     @property
@@ -259,6 +262,7 @@ AUTHOR = BUILD_CONFIG.app.author
 ORGANIZATION = BUILD_CONFIG.app.organization
 BUILD_TYPE = BUILD_CONFIG.build.build_type
 TARGET_PLATFORM = BUILD_CONFIG.build.target_platform
+DATA_DIR_NAME = BUILD_CONFIG.app.data_dir_name
 
 # Variables dunder para compatibilidad con estándares Python
 __version__ = BUILD_CONFIG.app.version

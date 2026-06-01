@@ -22,12 +22,13 @@ class SavedQuotePDFViewer(QDialog):
     Usa la misma UI que PDFViewer pero sin funcionalidad de guardado
     """
     
-    def __init__(self, pdf_path: str, quote_number: str, parent=None):
+    def __init__(self, pdf_path: str, quote_number: str, parent=None, is_report: bool = False):
         # NO pasar parent para evitar que afecte a la ventana principal (igual que PDFViewer)
         super().__init__(None)  # Sin parent
         self._is_closing = False
         self.pdf_path = pdf_path
         self.quote_number = quote_number
+        self.is_report = is_report
         
         # Configurar como ventana independiente (igual que PDFViewer)
         self.setWindowFlags(
@@ -231,7 +232,8 @@ class SavedQuotePDFViewer(QDialog):
         """Maneja la descarga/guardado del PDF usando lógica similar a PDFViewer"""
         try:
             # Usar la misma lógica de descarga que PDFViewer
-            suggested_name = f"Presupuesto_{self.quote_number}.pdf"
+            key = I18N.Pdf.FILE_REPORT_NAME if self.is_report else I18N.Pdf.FILE_DEFAULT_NAME
+            suggested_name = tr(key, number=self.quote_number) + ".pdf"
             default_path = os.path.join(
                 QStandardPaths.writableLocation(QStandardPaths.StandardLocation.DownloadLocation),
                 suggested_name

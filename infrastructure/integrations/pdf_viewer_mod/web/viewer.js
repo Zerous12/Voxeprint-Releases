@@ -243,6 +243,7 @@ const PDFViewerApplication = {
       if (_app_options.AppOptions.get("pdfBugEnabled")) {
         await this._parseHashParams();
       }
+      this._applyLocaleFromURL();
       return;
     }
     if (_app_options.AppOptions._hasUserOptions()) {
@@ -255,6 +256,15 @@ const PDFViewerApplication = {
     }
     if (_app_options.AppOptions.get("pdfBugEnabled")) {
       await this._parseHashParams();
+    }
+    this._applyLocaleFromURL();
+  },
+  _applyLocaleFromURL() {
+    const qs = new URLSearchParams(document.location.search.substring(1));
+    const hash = document.location.hash.substring(1);
+    const locale = qs.get("locale") || new URLSearchParams(hash).get("locale");
+    if (locale) {
+      _app_options.AppOptions.set("locale", locale);
     }
   },
   async _parseHashParams() {
