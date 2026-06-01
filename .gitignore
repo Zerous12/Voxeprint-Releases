@@ -1,10 +1,6 @@
 # Base de datos SQLite
 data/
 
-# Documentación pública (se incluye en el repo)
-!docs/
-!docs/CHANGELOG.txt
-
 # Carpetas privadas / de desarrollo interno
 scripts/
 tests/
