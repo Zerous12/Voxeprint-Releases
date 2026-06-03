@@ -4,6 +4,7 @@ Maneja restauración, validación de versiones, estadísticas y migraciones.
 """
 
 import os
+import platform
 import re
 import shutil
 import sqlite3
@@ -772,7 +773,13 @@ class DatabaseRestoreService:
             import subprocess
             backup_path = self.backup_dir
             if os.path.exists(backup_path):
-                subprocess.Popen(f'explorer "{backup_path}"')
+                system = platform.system()
+                if system == "Windows":
+                    subprocess.Popen(f'explorer "{backup_path}"')
+                elif system == "Darwin":
+                    subprocess.Popen(["open", str(backup_path)])
+                else:
+                    subprocess.Popen(["xdg-open", str(backup_path)])
             else:
                 logger.warning("DatabaseRestore", 
                     f"Carpeta de backups no existe: {backup_path}")

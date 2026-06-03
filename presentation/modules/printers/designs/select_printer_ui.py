@@ -75,24 +75,24 @@ class Ui_Temp_Select_Printers(object):
         self.gridLayout_2.setSpacing(0)
         self.gridLayout_2.setObjectName(u"gridLayout_2")
         self.gridLayout_2.setContentsMargins(0, 0, 0, 0)
-        self.frame = QFrame(Temp_Select_Printers)
-        self.frame.setObjectName(u"frame")
+        self.frame_container_selector = QFrame(Temp_Select_Printers)
+        self.frame_container_selector.setObjectName(u"frame_container_selector")
         sizePolicy1 = QSizePolicy(QSizePolicy.Policy.Expanding, QSizePolicy.Policy.Expanding)
         sizePolicy1.setHorizontalStretch(0)
         sizePolicy1.setVerticalStretch(0)
-        sizePolicy1.setHeightForWidth(self.frame.sizePolicy().hasHeightForWidth())
-        self.frame.setSizePolicy(sizePolicy1)
-        self.frame.setMinimumSize(QSize(800, 420))
-        self.frame.setFrameShape(QFrame.Shape.StyledPanel)
-        self.frame.setFrameShadow(QFrame.Shadow.Raised)
-        self.gridLayout = QGridLayout(self.frame)
+        sizePolicy1.setHeightForWidth(self.frame_container_selector.sizePolicy().hasHeightForWidth())
+        self.frame_container_selector.setSizePolicy(sizePolicy1)
+        self.frame_container_selector.setMinimumSize(QSize(800, 420))
+        self.frame_container_selector.setFrameShape(QFrame.Shape.StyledPanel)
+        self.frame_container_selector.setFrameShadow(QFrame.Shadow.Raised)
+        self.gridLayout = QGridLayout(self.frame_container_selector)
         self.gridLayout.setSpacing(0)
         self.gridLayout.setObjectName(u"gridLayout")
         self.gridLayout.setContentsMargins(2, 0, 2, 10)
         self.horizontalLayout_3 = QHBoxLayout()
         self.horizontalLayout_3.setSpacing(4)
         self.horizontalLayout_3.setObjectName(u"horizontalLayout_3")
-        self.qtable_printers = QTableWidget(self.frame)
+        self.qtable_printers = QTableWidget(self.frame_container_selector)
         if (self.qtable_printers.columnCount() < 5):
             self.qtable_printers.setColumnCount(5)
         font = QFont()
@@ -194,7 +194,7 @@ class Ui_Temp_Select_Printers(object):
 
         self.horizontalLayout_3.addWidget(self.qtable_printers)
 
-        self.line_separator = QFrame(self.frame)
+        self.line_separator = QFrame(self.frame_container_selector)
         self.line_separator.setObjectName(u"line_separator")
         self.line_separator.setFrameShape(QFrame.Shape.VLine)
         self.line_separator.setFrameShadow(QFrame.Shadow.Sunken)
@@ -203,7 +203,7 @@ class Ui_Temp_Select_Printers(object):
 
         self.verticalLayout_2 = QVBoxLayout()
         self.verticalLayout_2.setObjectName(u"verticalLayout_2")
-        self.label_printer_details_title = QLabel(self.frame)
+        self.label_printer_details_title = QLabel(self.frame_container_selector)
         self.label_printer_details_title.setObjectName(u"label_printer_details_title")
         sizePolicy3 = QSizePolicy(QSizePolicy.Policy.MinimumExpanding, QSizePolicy.Policy.MinimumExpanding)
         sizePolicy3.setHorizontalStretch(0)
@@ -215,7 +215,7 @@ class Ui_Temp_Select_Printers(object):
 
         self.verticalLayout_2.addWidget(self.label_printer_details_title)
 
-        self.textEdit_details_printer = QTextEdit(self.frame)
+        self.textEdit_details_printer = QTextEdit(self.frame_container_selector)
         self.textEdit_details_printer.setObjectName(u"textEdit_details_printer")
         self.textEdit_details_printer.setMinimumSize(QSize(230, 171))
         self.textEdit_details_printer.setStyleSheet(u"")
@@ -223,7 +223,7 @@ class Ui_Temp_Select_Printers(object):
 
         self.verticalLayout_2.addWidget(self.textEdit_details_printer)
 
-        self.label_printer_consumo = QLabel(self.frame)
+        self.label_printer_consumo = QLabel(self.frame_container_selector)
         self.label_printer_consumo.setObjectName(u"label_printer_consumo")
         sizePolicy3.setHeightForWidth(self.label_printer_consumo.sizePolicy().hasHeightForWidth())
         self.label_printer_consumo.setSizePolicy(sizePolicy3)
@@ -232,7 +232,7 @@ class Ui_Temp_Select_Printers(object):
 
         self.verticalLayout_2.addWidget(self.label_printer_consumo)
 
-        self.label_printer_operation_price = QLabel(self.frame)
+        self.label_printer_operation_price = QLabel(self.frame_container_selector)
         self.label_printer_operation_price.setObjectName(u"label_printer_operation_price")
         sizePolicy3.setHeightForWidth(self.label_printer_operation_price.sizePolicy().hasHeightForWidth())
         self.label_printer_operation_price.setSizePolicy(sizePolicy3)
@@ -251,7 +251,7 @@ class Ui_Temp_Select_Printers(object):
         self.horizontalLayout_7.setSpacing(0)
         self.horizontalLayout_7.setObjectName(u"horizontalLayout_7")
         self.horizontalLayout_7.setContentsMargins(2, -1, 2, -1)
-        self.groupBox_action = QGroupBox(self.frame)
+        self.groupBox_action = QGroupBox(self.frame_container_selector)
         self.groupBox_action.setObjectName(u"groupBox_action")
         sizePolicy4 = QSizePolicy(QSizePolicy.Policy.Preferred, QSizePolicy.Policy.Preferred)
         sizePolicy4.setHorizontalStretch(0)
@@ -355,7 +355,7 @@ class Ui_Temp_Select_Printers(object):
         self.gridLayout.addLayout(self.horizontalLayout_7, 2, 0, 1, 1)
 
 
-        self.gridLayout_2.addWidget(self.frame, 1, 0, 1, 1)
+        self.gridLayout_2.addWidget(self.frame_container_selector, 1, 0, 1, 1)
 
         self.verticalLayout = QVBoxLayout()
         self.verticalLayout.setSpacing(0)

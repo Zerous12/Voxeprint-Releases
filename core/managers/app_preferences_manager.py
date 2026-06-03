@@ -6,6 +6,7 @@ from typing import Dict, Any, Optional
 from pathlib import Path
 from core.utils.path_helper import config_dir
 from core.utils.logger import logger
+from core.utils.first_run_detector import detect_system_defaults
 
 
 class AppPreferencesManager:
@@ -91,8 +92,12 @@ class AppPreferencesManager:
                     
                     return merged
             else:
-                # Crear archivo con preferencias por defecto
+                # Primer inicio: detectar idioma y región del sistema operativo
+                language, locale_code, _ = detect_system_defaults()
+                logger.info("AppPreferences", f"Primer inicio detectado — idioma: {language}, región: {locale_code}")
                 defaults = self._get_default_preferences()
+                defaults["appearance"]["language"] = language
+                defaults["appearance"]["locale"] = locale_code
                 self._preferences = defaults
                 self.save_preferences()
                 return defaults

@@ -23,6 +23,7 @@ en Configuraciones → Tasas de Cambio antes de usarlas en producción.
 """
 import sqlite3
 from pathlib import Path
+from core.utils.logger import logger
 
 
 NEW_CURRENCIES = [
@@ -58,32 +59,32 @@ def check_if_needed(conn: sqlite3.Connection) -> bool:
     cursor.execute("SELECT COUNT(*) FROM currencies WHERE code IN ('CAD','COP','NIO','MXN','PEN','HNL','CLP','BOB','UYU')")
     existing = cursor.fetchone()[0]
     if existing == len(NEW_CURRENCIES):
-        print("ℹ️  Las monedas LATAM ya existen — migración no necesaria")
+        logger.info("Migration", "Las monedas LATAM ya existen — migración no necesaria")
         return False
     return True
 
 
 def add_currencies(conn: sqlite3.Connection):
     cursor = conn.cursor()
-    print("🔄 Insertando monedas LATAM...")
+    logger.info("Migration", " Insertando monedas LATAM...")
     cursor.executemany("""
         INSERT OR IGNORE INTO currencies
         (code, symbol, name, decimals, thousands_sep, decimal_sep, symbol_position, space_between, is_active)
         VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)
     """, NEW_CURRENCIES)
     conn.commit()
-    print(f"✅ {cursor.rowcount} monedas nuevas insertadas (inactivas por defecto)")
+    logger.info("Migration", f" {cursor.rowcount} monedas nuevas insertadas (inactivas por defecto)")
 
 
 def add_exchange_rates(conn: sqlite3.Connection):
     cursor = conn.cursor()
-    print("🔄 Insertando tasas de cambio USD → monedas LATAM...")
+    logger.info("Migration", " Insertando tasas de cambio USD → monedas LATAM...")
     cursor.executemany("""
         INSERT OR IGNORE INTO exchange_rates (base_currency, target_currency, rate)
         VALUES (?, ?, ?)
     """, NEW_EXCHANGE_RATES)
     conn.commit()
-    print(f"✅ {cursor.rowcount} tasas de cambio insertadas")
+    logger.info("Migration", f" {cursor.rowcount} tasas de cambio insertadas")
 
 
 def migrate():
@@ -95,7 +96,7 @@ def migrate():
     db_path = database_path()
 
     if not db_path.exists():
-        print("❌ Base de datos no encontrada")
+        logger.error("Migration", " Base de datos no encontrada")
         return False
 
     conn = None
@@ -106,24 +107,17 @@ def migrate():
             conn.close()
             return True
 
-        print("\n🚀 Iniciando migración: Monedas LATAM...")
+        logger.info("Migration", " Iniciando migración: Monedas LATAM...")
         add_currencies(conn)
         add_exchange_rates(conn)
 
         conn.close()
-        print("\n✅ MIGRACIÓN COMPLETADA — Activá las monedas en Configuraciones → Tasas de Cambio")
+        logger.info("Migration", " MIGRACIÓN COMPLETADA — Activá las monedas en Configuraciones → Tasas de Cambio")
         return True
 
     except Exception as e:
-        print(f"\n❌ ERROR: {e}")
+        logger.error("Migration", f"ERROR: {e}")
         if conn:
             conn.rollback()
             conn.close()
         return False
-
-
-if __name__ == "__main__":
-    print("=" * 60)
-    print("MIGRACIÓN: Monedas LATAM adicionales")
-    print("=" * 60)
-    migrate()

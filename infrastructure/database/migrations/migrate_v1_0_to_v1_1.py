@@ -21,6 +21,7 @@ sys.path.insert(0, str(root_dir))
 
 from infrastructure.database.connection import DatabaseConnection
 from core.utils.path_helper import database_path
+from core.utils.logger import logger
 
 
 class Migration_v1_0_to_v1_1:
@@ -32,7 +33,7 @@ class Migration_v1_0_to_v1_1:
     
     def __init__(self):
         # Detectar si tenemos BD v1.0 o v1.1
-        db_dir = Path.home() / "Documents" / "Voxeprint3D" / "Database"
+        db_dir = database_path().parent
         db_dir.mkdir(parents=True, exist_ok=True)
         
         self.old_db_path = db_dir / "voxeprint_1.0.db"
@@ -92,13 +93,8 @@ class Migration_v1_0_to_v1_1:
         Returns:
             (success, message)
         """
-        try:
-            print("\n" + "=" * 80)
-            print("MIGRACIÓN: v1.0 → v1.1")
-            print("=" * 80)
-            
+        try:            
             # 1. Backup automático
-            print("\n1️⃣ Creando backup de seguridad...")
             import shutil
             from datetime import datetime
             
@@ -109,11 +105,8 @@ class Migration_v1_0_to_v1_1:
             backup_path = backup_dir / f"voxeprint_1.0_pre_migration_{timestamp}.db"
             
             shutil.copy2(self.old_db_path, backup_path)
-            print(f"   ✅ Backup creado: {backup_path.name}")
             
-            # 2. Analizar registros
-            print("\n2️⃣ Analizando registros existentes...")
-            
+            # 2. Analizar registros            
             tables_to_check = ['quotes', 'customers', 'printers', 'filaments', 'system_configs']
             total_updated = 0
             
@@ -125,7 +118,7 @@ class Migration_v1_0_to_v1_1:
                     )[0]['cnt']
                     
                     if count == 0:
-                        print(f"   ⏭️  {table}: Sin registros")
+                        logger.info(f"Migration", f"{table}: Sin registros")
                         continue
                     
                     # Actualizar timestamps (restar offset UTC)
@@ -140,44 +133,17 @@ class Migration_v1_0_to_v1_1:
                     affected = self.db.execute_command(update_sql)
                     total_updated += affected
                     
-                    print(f"   ✅ {table}: {affected} registros actualizados")
+                    logger.info(f"Migration", f"{table}: {affected} registros actualizados")
                     
                 except Exception as e:
-                    print(f"   ⚠️  {table}: Error - {e}")
-            
-            # 3. Renombrar BD
-            print("\n3️⃣ Creando nueva versión de BD...")
-            
+                    logger.error(f"Migration", f"Error en {table}: {e}")            
             # Copiar BD actualizada a nueva versión
             import shutil
-            shutil.copy2(self.old_db_path, self.new_db_path)
-            print(f"   ✅ Nueva BD creada: {self.new_db_path.name}")
-            
-            print("\n" + "=" * 80)
-            print(f"✅ MIGRACIÓN COMPLETADA")
-            print("=" * 80)
-            print(f"\n📊 Resumen:")
-            print(f"   • Registros actualizados: {total_updated}")
-            print(f"   • Offset aplicado: {self.utc_offset_hours} horas")
-            print(f"   • Backup guardado en: backups/")
-            print(f"   • BD Original: {self.old_db_path.name} (se mantiene como respaldo)")
-            print(f"   • BD Nueva: {self.new_db_path.name} (la app usará esta)")
-            print(f"\n📌 IMPORTANTE:")
-            print(f"   • La aplicación usará automáticamente voxeprint_1.1.db")
-            print(f"   • Los timestamps ahora están en hora local de Paraguay")
-            print(f"   • Puedes eliminar voxeprint_1.0.db si todo funciona bien")
-            print(f"   • Para volver atrás: restaura desde backups/")
-            
+            shutil.copy2(self.old_db_path, self.new_db_path)  
             return True, f"Migración exitosa: {total_updated} registros actualizados"
             
         except Exception as e:
-            print(f"\n❌ ERROR en migración: {e}")
-            import traceback
-            traceback.print_exc()
-            
-            print(f"\n🔄 RESTAURACIÓN:")
-            print(f"   Si algo salió mal, restaura desde: {backup_path}")
-            
+            logger.error(f"Migration", f"Error en migración: {e}")            
             return False, f"Error: {e}"
     
     def rollback(self, backup_file: str) -> Tuple[bool, str]:
@@ -204,7 +170,7 @@ class Migration_v1_0_to_v1_1:
             # Opcional: eliminar v1.1 si existe
             if self.new_db_path.exists():
                 self.new_db_path.unlink()
-                print(f"   🗑️  voxeprint_1.1.db eliminado")
+                logger.info("Migration", f"voxeprint_1.1.db eliminado")
             
             return True, f"BD restaurada desde: {backup_file}"
             
@@ -221,25 +187,16 @@ def run_migration_if_needed():
     is_needed, reason = migration.check_if_needed()
     
     if not is_needed:
-        print(f"ℹ️  Migración no necesaria: {reason}")
-        return True
-    
-    print(f"🔄 Migración necesaria: {reason}")
-    print(f"\n¿Desea continuar con la migración? (se creará backup automático)")
+        logger.info("Migration", f"Migración no necesaria: {reason}")
+        return True    
     
     response = input("Continuar? [S/n]: ").strip().lower()
     
     if response in ['', 's', 'si', 'sí', 'y', 'yes']:
         success, message = migration.migrate()
+        logger.info("Migration", message)
         return success
     else:
-        print("❌ Migración cancelada por el usuario")
+        logger.info("Migration", "Migración cancelada por el usuario")
         return False
 
-
-if __name__ == "__main__":
-    """
-    Ejecutar migración manualmente:
-    python -m infrastructure.database.migrations.migrate_v1_0_to_v1_1
-    """
-    run_migration_if_needed()

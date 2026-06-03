@@ -47,8 +47,8 @@ class EditPrinterDialog(QDialog):
         # Configurar ventana
         self.setWindowTitle(tr(I18N.Printer.DIALOG_EDIT_TITLE))
         self.setModal(True)
-        self.setMinimumSize(400, 500)
-        self.resize(450, 550)
+        self.setMinimumSize(400, 520)
+        self.resize(450, 560)
         self.setFixedSize(self.size())
         
         # Layout principal

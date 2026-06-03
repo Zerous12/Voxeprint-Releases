@@ -171,6 +171,14 @@ class I18N:
         COUNT_ALL = "Customer.count_all"
         COUNT_FILTERED = "Customer.count_filtered"
 
+    class SystemCheck:
+        TITLE_UNSUPPORTED = "SystemCheck.title_unsupported"
+        HEADER_UNSUPPORTED = "SystemCheck.header_unsupported"
+        WIN7 = "SystemCheck.win7"
+        WIN_LEGACY = "SystemCheck.win_legacy"
+        MACOS = "SystemCheck.macos"
+        APP_RUNNING = "SystemCheck.app_running"
+
     class Dialogs:
         APPLY = "Dialogs.apply"
         CANCEL = "Dialogs.cancel"
@@ -241,10 +249,14 @@ class I18N:
         TOOLTIP_SHOW_DATA = "Donation.tooltip_show_data"
 
     class Errors:
+        BTN_VIEW_LOGS = "Errors.btn_view_logs"
         DATA_INCOMPLETE_MSG = "Errors.data_incomplete_msg"
         DATA_INCOMPLETE_TITLE = "Errors.data_incomplete_title"
         DATABASE_CONNECTION_ERROR = "Errors.database_connection_error"
         DELETE_FAILED = "Errors.delete_failed"
+        FATAL_MSG = "Errors.fatal_msg"
+        FATAL_MSG_FALLBACK = "Errors.fatal_msg_fallback"
+        FATAL_TITLE = "Errors.fatal_title"
         FILE_NOT_FOUND = "Errors.file_not_found"
         INVALID_DATE = "Errors.invalid_date"
         INVALID_EMAIL = "Errors.invalid_email"
@@ -527,6 +539,8 @@ class I18N:
         MSG_DOWNLOAD_SUCCESS = "PDF.msg_download_success"
         MSG_DOWNLOAD_ERROR_TITLE = "PDF.msg_download_error_title"
         MSG_DOWNLOAD_ERROR = "PDF.msg_download_error"
+        FILE_DEFAULT_NAME = "PDF.file_default_name"
+        FILE_REPORT_NAME = "PDF.file_report_name"
 
     class Printer:
         CONFIRM_DELETE = "Printer.confirm_delete"
@@ -906,6 +920,11 @@ class I18N:
         INV_CONFIRM_DELETE_TITLE = "Quote.inv_confirm_delete_title"
         INV_CONFIRM_DELETE = "Quote.inv_confirm_delete"
         INV_DELETED_TITLE = "Quote.inv_deleted_title"
+        INV_ERROR_DELETE = "Quote.inv_error_delete"
+        INV_ERROR_NOT_INIT = "Quote.inv_error_not_init"
+        INV_ERROR_UNKNOWN = "Quote.inv_error_unknown"
+        INV_ERROR_STATS = "Quote.inv_error_stats"
+        INV_STATUS_REPORT = "Quote.inv_status_report"
         INV_NO_DATA_TITLE = "Quote.inv_no_data_title"
         INV_NO_DATA = "Quote.inv_no_data"
         INV_DETAIL_HEADER = "Quote.inv_detail_header"
@@ -990,6 +1009,10 @@ class I18N:
         MSG_OUTDATED_SAVE = "Quote.msg_outdated_save"
         MSG_CALC_IN_PROGRESS_TITLE = "Quote.msg_calc_in_progress_title"
         MSG_CALC_IN_PROGRESS = "Quote.msg_calc_in_progress"
+        MSG_CALC_SUCCESS_TITLE = "Quote.msg_calc_success_title"
+        MSG_CALC_SUCCESS = "Quote.msg_calc_success"
+        MSG_CALC_POST = "Quote.msg_calc_post"
+        MSG_CALC_ADVANCE = "Quote.msg_calc_advance"
 
     class QuoteNote:
         # Dialog buttons & feedback
@@ -1000,7 +1023,8 @@ class I18N:
         STATUS_SAVED         = "QuoteNote.status_saved"
         DIALOG_SAVE_TITLE    = "QuoteNote.dialog_save_title"
         DIALOG_SAVE_FILTER   = "QuoteNote.dialog_save_filter"
-        # Document labels
+        FILE_DEFAULT_NAME    = "QuoteNote.file_default_name"
+
         LABEL_PHONE          = "QuoteNote.label_phone"
         LABEL_EMAIL          = "QuoteNote.label_email"
         LABEL_CONTACT        = "QuoteNote.label_contact"
@@ -1287,6 +1311,8 @@ class I18N:
         MSG_SAVE_ERROR_TEXT = "SystemSettings.msg_save_error_text"
         MSG_SAVE_CRITICAL_TEXT = "SystemSettings.msg_save_critical_text"
         CHECKBOX_COMMISSION_SHIELD = "SystemSettings.checkbox_commission_shield"
+        CHECKBOX_COMMISSION_SHIELD_DYNAMIC = "SystemSettings.checkbox_commission_shield_dynamic"
+        TOOLTIP_COMMISSION_SHIELD = "SystemSettings.tooltip_commission_shield"
         CHECKBOX_AUTO_BACKUP = "SystemSettings.checkbox_auto_backup"
         # Language / Region tab
         TAB_LANGUAGE = "SystemSettings.tab_language"

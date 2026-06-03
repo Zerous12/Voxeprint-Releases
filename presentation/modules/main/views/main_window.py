@@ -956,28 +956,51 @@ class MainPanel(QMainWindow):
 
     def _setup_keyboard_shortcuts(self):
         """Configura los shortcuts de teclado para las acciones principales"""
-        # Ctrl+G - Generar presupuesto (Calcular)
+        # Ctrl+R - Calcular presupuesto
         self.shortcut_generate = QShortcut(QKeySequence("Ctrl+R"), self)
         self.shortcut_generate.activated.connect(self.calculate_quote_requested.emit)
         self.ui.btn_calculator.setToolTip(tr(I18N.MainWindow.TOOLTIP_CALCULATE))
-        
-        # Ctrl+L - Limpiar formulario 
+
+        # Ctrl+L - Limpiar formulario
         self.shortcut_clear = QShortcut(QKeySequence("Ctrl+L"), self)
         self.shortcut_clear.activated.connect(self.clear_form_requested.emit)
         self.ui.btn_cleaner.setToolTip(tr(I18N.MainWindow.TOOLTIP_CLEAR_FORM))
-        
+
         # Ctrl+P - Vista previa
-        self.shortcut_preview = QShortcut(QKeySequence("Ctrl+V"), self)
+        self.shortcut_preview = QShortcut(QKeySequence("Ctrl+P"), self)
         self.shortcut_preview.activated.connect(self.preview_requested.emit)
         self.ui.btn_preview.setToolTip(tr(I18N.MainWindow.TOOLTIP_PREVIEW))
-        
+
         # Ctrl+G - Generar (modo activo: PDF o Nota)
         self.shortcut_save = QShortcut(QKeySequence("Ctrl+G"), self)
         self.shortcut_save.activated.connect(self._emit_generate_action)
-        
+
         # Ctrl+9 - Toggle panel de procesos
         self.shortcut_toggle_process = QShortcut(QKeySequence("Ctrl+9"), self)
         self.shortcut_toggle_process.activated.connect(self._toggle_process_view)
+
+        # Ctrl+I - Acerca de (Info)
+        self.shortcut_about = QShortcut(QKeySequence("Ctrl+I"), self)
+        self.shortcut_about.activated.connect(self.build_info_requested.emit)
+
+        # Ctrl+D - Donaciones (Soporte)
+        self.shortcut_donation = QShortcut(QKeySequence("Ctrl+D"), self)
+        self.shortcut_donation.activated.connect(self.donation_requested.emit)
+
+        # Inicialmente solo habilitar si estamos en el tab de presupuestos
+        self._update_shortcuts_enabled()
+
+        # Conectar cambio de tab para habilitar/deshabilitar shortcuts
+        self.ui.tabWidget.currentChanged.connect(self._update_shortcuts_enabled)
+
+    def _update_shortcuts_enabled(self):
+        """Habilita los shortcuts específicos solo si el tab activo es el de presupuestos (tab_one)."""
+        current_widget = self.ui.tabWidget.currentWidget()
+        is_presupuesto = current_widget == self.ui.tab_one
+        self.shortcut_generate.setEnabled(is_presupuesto)
+        self.shortcut_clear.setEnabled(is_presupuesto)
+        self.shortcut_preview.setEnabled(is_presupuesto)
+        self.shortcut_save.setEnabled(is_presupuesto)
     
     def _open_quick_params(self):
         """Abre el panel flotante de Parámetros Rápidos centrado sobre el botón btn_tuning."""
@@ -1052,9 +1075,10 @@ class MainPanel(QMainWindow):
         self.add_system_log("Shortcuts disponibles:")
         self.add_system_log("   • Ctrl+G: Generar presupuesto")
         self.add_system_log("   • Ctrl+L: Limpiar formulario")
-        self.add_system_log("   • Ctrl+V: Vista previa")
+        self.add_system_log("   • Ctrl+P: Vista previa")
         self.add_system_log("   • Ctrl+R: Calcular presupuesto")
         self.add_system_log("   • Ctrl+9: Mostrar/Ocultar panel de procesos")
+        self.add_system_log("   • Ctrl+D: Soporte/Donaciones")
         self.add_system_log("   • F5: Actualizar todas las tablas")
         self.add_system_log("   • Doble click en tab: Actualizar tabla específica")
         self.add_separator()

@@ -234,23 +234,23 @@ class Ui_Temp_Select_Customers(object):
 
         self.gridLayout_2.addLayout(self.horizontalLayout_2, 1, 0, 1, 1)
 
-        self.frame = QFrame(Temp_Select_Customers)
-        self.frame.setObjectName(u"frame")
+        self.frame_container_selector = QFrame(Temp_Select_Customers)
+        self.frame_container_selector.setObjectName(u"frame_container_selector")
         sizePolicy3 = QSizePolicy(QSizePolicy.Policy.Expanding, QSizePolicy.Policy.Expanding)
         sizePolicy3.setHorizontalStretch(0)
         sizePolicy3.setVerticalStretch(0)
-        sizePolicy3.setHeightForWidth(self.frame.sizePolicy().hasHeightForWidth())
-        self.frame.setSizePolicy(sizePolicy3)
-        self.frame.setMinimumSize(QSize(670, 411))
-        self.frame.setMaximumSize(QSize(670, 411))
-        self.frame.setStyleSheet(u"")
-        self.frame.setFrameShape(QFrame.Shape.StyledPanel)
-        self.frame.setFrameShadow(QFrame.Shadow.Raised)
-        self.gridLayout = QGridLayout(self.frame)
+        sizePolicy3.setHeightForWidth(self.frame_container_selector.sizePolicy().hasHeightForWidth())
+        self.frame_container_selector.setSizePolicy(sizePolicy3)
+        self.frame_container_selector.setMinimumSize(QSize(670, 411))
+        self.frame_container_selector.setMaximumSize(QSize(670, 411))
+        self.frame_container_selector.setStyleSheet(u"")
+        self.frame_container_selector.setFrameShape(QFrame.Shape.StyledPanel)
+        self.frame_container_selector.setFrameShadow(QFrame.Shadow.Raised)
+        self.gridLayout = QGridLayout(self.frame_container_selector)
         self.gridLayout.setSpacing(0)
         self.gridLayout.setObjectName(u"gridLayout")
         self.gridLayout.setContentsMargins(2, 2, 2, 10)
-        self.qtable_customers = QTableWidget(self.frame)
+        self.qtable_customers = QTableWidget(self.frame_container_selector)
         if (self.qtable_customers.columnCount() < 5):
             self.qtable_customers.setColumnCount(5)
         font4 = QFont()
@@ -312,7 +312,7 @@ class Ui_Temp_Select_Customers(object):
         self.horizontalLayout.setSpacing(0)
         self.horizontalLayout.setObjectName(u"horizontalLayout")
         self.horizontalLayout.setContentsMargins(2, -1, 2, -1)
-        self.groupBox_action = QGroupBox(self.frame)
+        self.groupBox_action = QGroupBox(self.frame_container_selector)
         self.groupBox_action.setObjectName(u"groupBox_action")
         self.groupBox_action.setMinimumSize(QSize(0, 85))
         font6 = QFont()
@@ -415,7 +415,7 @@ class Ui_Temp_Select_Customers(object):
         self.gridLayout.addLayout(self.horizontalLayout, 3, 0, 1, 1)
 
 
-        self.gridLayout_2.addWidget(self.frame, 2, 0, 1, 1)
+        self.gridLayout_2.addWidget(self.frame_container_selector, 2, 0, 1, 1)
 
 
         self.retranslateUi(Temp_Select_Customers)

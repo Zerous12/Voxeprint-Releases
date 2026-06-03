@@ -6,6 +6,10 @@ from typing import Dict, Any, List, Tuple
 from pathlib import Path
 from core.utils.path_helper import config_dir, build_resource_path
 from core.utils.logger import logger
+from core.utils.first_run_detector import (
+    detect_system_defaults, get_note_title, get_quote_title,
+    get_doc_title, get_doc_subtitle,
+)
 
 class QuoteConfigManager:
     """Maneja la configuración para la generación de PDFs de presupuestos"""
@@ -24,21 +28,28 @@ class QuoteConfigManager:
         config_path = config_dir() / "quote_config.json"
         config_path.parent.mkdir(parents=True, exist_ok=True)
         if not config_path.exists():
+            # Detectar idioma del sistema para personalizar el JSON inicial
+            language, _, service_label = detect_system_defaults()
+            note_title  = get_note_title(language)
+            quote_title = get_quote_title(language)
+            doc_title   = get_doc_title(language)
+            doc_subtitle = get_doc_subtitle(language)
+
             default_config = {
                 "company_info": {
-                    "name": "VoxePrint",
-                    "address": "Direction",
+                    "name": "Company Name",
+                    "address": "Address",
                     "city": "City",
-                    "phone": "+59596543210",
-                    "email": "Voxeprint@mail,com",
-                    "website": "Voxeprint.com"
+                    "phone": "+1-555-1234",
+                    "email": "CompanyEmail@example.com",
+                    "website": "www.CompanyWebsite.com"
                 },
                 "document_settings": {
                     "logo_path": "",  # Vacío por defecto - usará logo_default
                     "logo_default": "resources/images/logo_for_PDF_company.png",
                     "pdf_font_family": "Arial",
-                    "title": "PRESUPUESTO",
-                    "subtitle": "Impresión 3D",
+                    "title": doc_title,
+                    "subtitle": doc_subtitle,
                     "font_config": {
                         "header": ["Helvetica-Bold", 18],
                         "section_title": ["Helvetica-Bold", 10],
@@ -61,7 +72,7 @@ class QuoteConfigManager:
                     }
                 },
                 "quote_settings": {
-                    "title": "PRESUPUESTO DE IMPRESIÓN 3D",
+                    "title": quote_title,
                     "currency": "Gs.",
                     "currency_code": "PYG",
                     "include_iva": True,
@@ -93,8 +104,10 @@ class QuoteConfigManager:
                     }
                 },
                 "note_settings": {
-                    "title": "Nota de Precios",
+                    "title": note_title,
                     "primary_color": "",
+                    "display_mode": "summary",
+                    "summary_label": service_label,
                     "show_material": True,
                     "show_electricity": True,
                     "show_wear": True,
@@ -102,6 +115,11 @@ class QuoteConfigManager:
                     "show_commission": True,
                     "show_post_processing": True,
                     "show_tax": True
+                },
+                "pdf_settings": {
+                    "primary_color": "",
+                    "display_mode": "summary",
+                    "summary_label": service_label
                 }
             }
             with open(config_path, "w", encoding="utf-8") as f:
@@ -302,7 +320,7 @@ class QuoteConfigManager:
         Usa defaults si la sección no existe en el JSON (backwards compat)."""
         defaults = {
             "primary_color": "",
-            "display_mode": "detailed",
+            "display_mode": "summary",
             "summary_label": "Servicio de Impresión 3D",
         }
         stored = self._config.get("pdf_settings", {})

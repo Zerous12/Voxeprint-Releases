@@ -46,6 +46,18 @@ class PdfViewerLoader(QObject):
         self._pdf_loaded_ok = False
         self.pdf_viewer_path = self._resolve_viewer_path()
 
+    @staticmethod
+    def _resolve_pdfjs_locale() -> str:
+        try:
+            app = __import__('PySide6.QtWidgets', fromlist=['QApplication']).QApplication.instance()
+            if app and hasattr(app, 'language_manager'):
+                lang = app.language_manager.current_language()
+                _map = {"es": "es-MX", "en": "en-US", "pt": "en-US"}
+                return _map.get(lang, "en-US")
+        except Exception:
+            pass
+        return "en-US"
+
     def load_pdf(self, pdf_path: str):
         try:
             viewer_url = QUrl.fromLocalFile(str(self.pdf_viewer_path))
@@ -53,6 +65,7 @@ class PdfViewerLoader(QObject):
             query = QUrlQuery()
             query.addQueryItem("file", pdf_url.toString(QUrl.FullyEncoded))
             query.addQueryItem("page", "1")
+            query.addQueryItem("locale", self._resolve_pdfjs_locale())
             viewer_url.setQuery(query)
             self.webview.load(viewer_url)
             # Force repaint inicial más temprano para evitar granulado
@@ -67,9 +80,8 @@ class PdfViewerLoader(QObject):
     def load_error_viewer(self, error_msg=None):        
         html = """
         <div style='display:flex;flex-direction:column;align-items:center;justify-content:center;height:100%;color:#b22222;font-family:sans-serif;'>
-            <h2>❌ Error al cargar el visor PDF</h2>
+            <h2>Error al cargar el visor PDF</h2>
             <p>No se pudo cargar el visor o el archivo PDF.</p>
-            <p>{error}</p>
         </div>
         """.format(error=error_msg or "Error desconocido.")
         self.webview.setHtml(html)
@@ -108,19 +120,9 @@ class PdfViewerLoader(QObject):
             self._pending_download = None
     
     def _resolve_viewer_path(self) -> Path:
-        """
-        Devuelve Path absoluto a .../infrastructure/integrations/pdf_viewer_mod/web/viewer.html
-        Funciona igual en dev y en binario (Nuitka standalone).
-        """
-        if getattr(sys, "frozen", False):
-            base = Path(sys.executable).parent  # carpeta app.dist
-            # la estructura se preserva por include-data-dir
-            return base / "infrastructure" / "integrations" / "pdf_viewer_mod" / "web" / "viewer.html"
-        else:
-            # Este archivo vive en presentation/widgets/animation_mod/...
-            here = Path(__file__).resolve()
-            project_root = here.parents[4]  # ajusta niveles según tu layout real
-            return project_root / "infrastructure" / "integrations" / "pdf_viewer_mod" / "web" / "viewer.html"
+        from core.utils.path_helper import app_root
+        root = app_root()
+        return root / "infrastructure" / "integrations" / "pdf_viewer_mod" / "web" / "viewer.html"
 
     def _force_repaint(self):
         """

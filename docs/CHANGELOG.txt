@@ -1,6 +1,27 @@
-﻿VoxePrint v1.2.4 - Build 124 (23.05.2026)
+﻿VoxePrint v1.2.8 - Build 136 (31.05.2026)
 ===============================================
-+ Cortador de imágenes: La herramienta de recorte de logos e imágenes es ahora más rápida y fácil de usar.
++ Sistema: Soporte mejorado para distribuciones Linux
++ Sistema: Internacionalización completa de cuadros de diálogo, mensajes de error y notificaciones
++ Visor PDF: Nombres de archivo localizados para descarga de PDFs (Presupuesto/Quote, Reporte/Report) y Notas de Precios (nota/note)
++ Sistema: Selector de estilo nativo del sistema en Linux (GTK, Breeze) con fallback a Fusion
++ Sistema: Flags QtWebEngine para Linux: QTWEBENGINE_CHROMIUM_FLAGS con --no-sandbox
++ Sistema: Mensajes de compatibilidad del sistema ahora traducibles (Windows 7/XP, macOS antiguo)
+- Fixed: Mensajes de error del sistema mostraban texto sin traducir
+- Fixed: Error al eliminar presupuesto mostraba texto sin traducir
+- Fixed: Visor PDF usaba nombre fijo "Presupuesto_" sin distinguir entre presupuesto y reporte
+- Fixed: Nota de Precios generaba archivo con prefijo "nota_" sin respetar el idioma
+- Fixed: Crash del generador de PDF en Linux por configuración de ruta de recursos
+- Fixed: Visor PDF no se abría correctamente en Linux por rutas de recursos
+- Fixed: Control de scroll inconsistente en vistas de inventario
+- Fixed: Tema Fusion forzado en Linux ignorando el estilo nativo del escritorio
+- Fixed: Configuración de inicio en Preferencias mostraba texto sin traducir
+- Fixed: Error en Shortcuts al cambiar de tab en el main
+- Fixed: Error de pintado en los fondos de algunos dialogos por el estilo Fusion en linux
+
+
+VoxePrint v1.2.4 - Build 132 (23.05.2026)
+===============================================
++ Cortador de imágenes: La herramienta de recorte de logos e imágenes es ahora más rápida y fácil de usar
 + Ajustes del Sistema: Nuevo tab "Idioma" con selector de idioma de la aplicación y selector de región/localización con vista previa de etiqueta fiscal y formato de fecha
 + Ajustes del Sistema: Al cambiar el idioma o la región se muestra un aviso de reinicio para aplicar los cambios correctamente en toda la aplicación
 + Ajustes del Sistema: Nota informativa en el tab Idioma que explica en qué partes de la app afectan estos cambios (textos, fechas, etiquetas fiscales)
@@ -24,7 +45,7 @@
 + Idiomas: Todos los textos visibles están centralizados y listos para ser traducidos
 + Idiomas: Traducciones completas en español e inglés para todos los módulos principales
 + Idiomas: Si una traducción no está disponible, la aplicación muestra automáticamente un texto alternativo disponible
-+ Sistema: Mejor velocidad y uso de recursos en tareas secundarias para una experiencia más fluida mientras se trabaja.
++ Sistema: Mejor velocidad y uso de recursos en tareas secundarias para una experiencia más fluida mientras se trabaja
 - Fixed: Se corrigieron pequeños errores visuales y de funcionamiento reportados por usuarios
 - Fixed: El color del filamento en el diálogo de detalles ahora se muestra traducido al idioma activo
 - Fixed: Hacer doble clic sobre un filamento del inventario lo cargaba automáticamente en el presupuesto de forma no intencional
@@ -48,8 +69,8 @@
 + Donaciones: Todos los textos del diálogo de donaciones están completamente traducidos al idioma configurado
 + Interfaz: El color del texto de progreso en el splash screen se adapta automáticamente al tema del sistema (claro u oscuro)
 + Idiomas: Los mensajes de carga del splash screen están traducidos al idioma configurado
-+ Filamentos: Más tipos y colores de filamento disponibles, incluyendo opciones metálicas, fluorescentes y especiales.
-+ G-Code: Carga de archivos G-code optimizada para mayor agilidad, incluso con archivos grandes o complejos.
++ Filamentos: Más tipos y colores de filamento disponibles, incluyendo opciones metálicas, fluorescentes y especiales
++ G-Code: Carga de archivos G-code optimizada para mayor agilidad, incluso con archivos grandes o complejos
 
 VoxePrint v1.2.0 - Build 121 (29.04.2026)
 ===============================================

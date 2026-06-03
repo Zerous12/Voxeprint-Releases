@@ -301,7 +301,7 @@ class PDFViewer(QDialog):
             self.pdf_viewer_loader.cancel_pending_download()
             
             # Configurar nombre sugerido
-            suggested_name = f"Presupuesto_{self.quote_number}.pdf"
+            suggested_name = tr(I18N.Pdf.FILE_DEFAULT_NAME, number=self.quote_number) + ".pdf"
             default_path = os.path.join(
                 QStandardPaths.writableLocation(QStandardPaths.StandardLocation.DownloadLocation),
                 suggested_name

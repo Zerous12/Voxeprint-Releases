@@ -33,6 +33,16 @@ See https://github.com/adobe-type-tools/cmap-resources
 
     <link rel="stylesheet" href="viewer.css">
 
+  <script>
+    const _qsLocale = new URLSearchParams(window.location.search).get("locale");
+    if (_qsLocale) {
+      if (typeof PDFViewerApplicationOptions !== "undefined") {
+        PDFViewerApplicationOptions.set("locale", _qsLocale);
+      } else {
+        window._PENDING_LOCALE = _qsLocale;
+      }
+    }
+  </script>
   <script src="viewer.js"></script>
   </head>
 

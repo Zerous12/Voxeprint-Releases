@@ -99,7 +99,7 @@ class FilamentInventoryPresenter(QObject):
         
         # Configurar textEdit inicial
         self.ui.textEdit_details_filament.setHtml(
-            "Seleccione un filamento de la tabla para ver sus detalles aquí."
+            tr(I18N.Filament.MSG_SELECT_TO_VIEW)
         )
         
         # Configurar estado inicial de botones
@@ -225,7 +225,11 @@ class FilamentInventoryPresenter(QObject):
                 table.setItem(row, 4, item_brand)
                 
                 # Columna 5: Color
-                filament_color = filament.color.value if hasattr(filament.color, 'value') else str(filament.color)
+                filament_color = (
+                    tr(f"FilamentColor.{filament.color.name}")
+                    if hasattr(filament.color, 'name')
+                    else str(filament.color)
+                )
                 item_color = QTableWidgetItem(filament_color)
                 item_color.setTextAlignment(Qt.AlignmentFlag.AlignCenter)
                 table.setItem(row, 5, item_color)

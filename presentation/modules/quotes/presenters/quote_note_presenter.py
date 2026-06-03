@@ -37,7 +37,7 @@ class QuoteNotePresenter:
         from datetime import datetime
         import os
         note_number = datetime.now().strftime("%d%m%y%H%M%S")
-        default_name = f"nota_{note_number}.png"
+        default_name = tr(I18N.QuoteNote.FILE_DEFAULT_NAME, number=note_number) + ".png"
         path, _ = QFileDialog.getSaveFileName(
             parent,
             tr(I18N.QuoteNote.DIALOG_SAVE_TITLE),

@@ -131,7 +131,7 @@ class SystemSettingsWidget(QWidget):
         self.btn_edit.setObjectName("unlockButton")
         self.btn_edit.setFixedHeight(33)
         self.btn_edit.setFixedWidth(130)
-        unlock_icon = QIcon("resources/icons/sys_unlock_alt.svg")
+        unlock_icon = QIcon(":/resources/resources/icons/sys_unlock_alt.svg")
         self.btn_edit.setIcon(unlock_icon)
         self.btn_edit.setIconSize(QSize(16, 16))
         self.btn_edit.setStyleSheet("""
@@ -159,7 +159,7 @@ class SystemSettingsWidget(QWidget):
         self.btn_reload.setObjectName("refreshButton")
         self.btn_reload.setFixedHeight(33)
         self.btn_reload.setFixedWidth(120)
-        refresh_icon = QIcon("resources/icons/sys_refresh.svg")
+        refresh_icon = QIcon(":/resources/resources/icons/sys_refresh.svg")
         self.btn_reload.setIcon(refresh_icon)
         self.btn_reload.setIconSize(QSize(16, 16))
         self.btn_reload.setStyleSheet("""
@@ -504,6 +504,7 @@ class SystemSettingsWidget(QWidget):
 
             if field_type == "double":
                 field = QDoubleSpinBox()
+                field.setMinimumHeight(22)
                 field.setRange(min_val, max_val)
 
                 if key == "electricity_rate":
@@ -511,6 +512,9 @@ class SystemSettingsWidget(QWidget):
                     current_currency = CurrencyHelper.get_current_currency()
                     decimals = CurrencyHelper.get_decimals(current_currency)
                     field.setDecimals(decimals)
+                elif key == "tax_rate":
+                    field.setDecimals(1)
+                    field.setSingleStep(0.5)
                 else:
                     field.setDecimals(0)
 
@@ -527,6 +531,7 @@ class SystemSettingsWidget(QWidget):
         lbl_peak.setToolTip(tr(I18N.Systemsettings.TOOLTIP_ELECT_CORRECTION))
         costs_layout.addWidget(lbl_peak, 1, 0)
         self.electricity_peak_multiplier = QDoubleSpinBox()
+        self.electricity_peak_multiplier.setMinimumHeight(22)
         self.electricity_peak_multiplier.setRange(1.0, 5.0)
         self.electricity_peak_multiplier.setDecimals(2)
         self.electricity_peak_multiplier.setSingleStep(0.1)
@@ -575,6 +580,7 @@ class SystemSettingsWidget(QWidget):
             lbl.setToolTip(tooltip)
             overhead_layout.addWidget(lbl, i, 0)
             spin = QDoubleSpinBox()
+            spin.setMinimumHeight(22)
             spin.setRange(0.0, 99_999_999.0)
             spin.setDecimals(_oh_decimals)
             spin.setValue(0.0)
@@ -612,6 +618,7 @@ class SystemSettingsWidget(QWidget):
         _lbl_hours_day.setToolTip(tr(I18N.Systemsettings.TOOLTIP_HOURS_DAY))
         params_layout.addWidget(_lbl_hours_day, 0, 0)
         self.spin_overhead_hours_per_day = QSpinBox()
+        self.spin_overhead_hours_per_day.setMinimumHeight(22)
         self.spin_overhead_hours_per_day.setRange(1, 24)
         self.spin_overhead_hours_per_day.setValue(12)
         self.spin_overhead_hours_per_day.setEnabled(False)
@@ -622,6 +629,7 @@ class SystemSettingsWidget(QWidget):
         _lbl_days_month.setToolTip(tr(I18N.Systemsettings.TOOLTIP_DAYS_MONTH))
         params_layout.addWidget(_lbl_days_month, 1, 0)
         self.spin_overhead_days_per_month = QSpinBox()
+        self.spin_overhead_days_per_month.setMinimumHeight(22)
         self.spin_overhead_days_per_month.setRange(1, 31)
         self.spin_overhead_days_per_month.setValue(30)
         self.spin_overhead_days_per_month.setEnabled(False)
@@ -647,6 +655,7 @@ class SystemSettingsWidget(QWidget):
         _printers_layout.addWidget(self.combo_overhead_printers_mode)
 
         self.spin_overhead_active_printers = QSpinBox()
+        self.spin_overhead_active_printers.setMinimumHeight(22)
         self.spin_overhead_active_printers.setRange(1, 99)
         self.spin_overhead_active_printers.setValue(1)
         self.spin_overhead_active_printers.setEnabled(False)
@@ -950,6 +959,7 @@ class SystemSettingsWidget(QWidget):
 
         note_present_layout.addWidget(QLabel(tr(I18N.Systemsettings.LABEL_NOTE_VALIDITY_DAYS)), 6, 0)
         self.note_validity_days = QSpinBox()
+        self.note_validity_days.setMinimumHeight(22)
         self.note_validity_days.setRange(1, 30)
         self.note_validity_days.setValue(30)
         self.note_validity_days.setEnabled(False)
@@ -993,6 +1003,7 @@ class SystemSettingsWidget(QWidget):
         # Auto-guardado
         system_layout.addWidget(QLabel(tr(I18N.Systemsettings.LABEL_AUTOSAVE_INTERVAL)), 0, 0)
         self.auto_save_interval = QSpinBox()
+        self.auto_save_interval.setMinimumHeight(22)
         self.auto_save_interval.setRange(30, 3600)
         self.auto_save_interval.setValue(300)
         self.auto_save_interval.setEnabled(False)
@@ -1008,6 +1019,7 @@ class SystemSettingsWidget(QWidget):
         # Frecuencia de respaldos
         system_layout.addWidget(QLabel(tr(I18N.Systemsettings.LABEL_BACKUP_FREQ)), 2, 0)
         self.backup_frequency = QSpinBox()
+        self.backup_frequency.setMinimumHeight(22)
         self.backup_frequency.setRange(1, 30)
         self.backup_frequency.setValue(7)
         self.backup_frequency.setEnabled(False)
@@ -1763,10 +1775,16 @@ class SystemSettingsWidget(QWidget):
     def _update_tax_shield_label(self, tax_rate: float):
         """Actualiza el texto y tooltip del checkbox de blindaje según el IVA configurado"""
         multiplier = 1 + (tax_rate / 100)
-        self.commission_tax_shield.setText(f"Aplicar ×{multiplier:.2f} a la comisión deseada")
+        multiplier_str = f"{multiplier:.2f}"
+        tax_rate_str = f"{tax_rate:.1f}"
+        self.commission_tax_shield.setText(
+            tr(I18N.Systemsettings.CHECKBOX_COMMISSION_SHIELD_DYNAMIC)
+            .replace("{multiplier}", multiplier_str)
+        )
         tooltip = (
-            f"Precio Final = Costo Materiales + (Comisión Deseada × {multiplier:.2f})\n"
-            f"Con IVA del {tax_rate:.0f}%, la comisión cobrada queda íntegra tras el impuesto."
+            tr(I18N.Systemsettings.TOOLTIP_COMMISSION_SHIELD)
+            .replace("{multiplier}", multiplier_str)
+            .replace("{tax_rate}", tax_rate_str)
         )
         self.commission_tax_shield.setToolTip(tooltip)
         self.lbl_shield.setToolTip(tooltip)

@@ -116,6 +116,7 @@ class MoreFilamentDialog(QDialog):
         self.weight_spin.setRange(1, 10000)
         self.weight_spin.setValue(1000)  # Default 1kg
         self.weight_spin.setSuffix("")
+        self.weight_spin.setMinimumWidth(90)
         self.weight_spin.setToolTip(tr(I18N.AddMoreFilament.TOOLTIP_WEIGHT))
         
         # Botones de acceso rápido para peso

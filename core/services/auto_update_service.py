@@ -91,7 +91,7 @@ class AutoUpdateService:
             # Hacer request a GitHub API
             request = urllib.request.Request(
                 self.update_url,
-                headers={'User-Agent': f'Voxeprint3D/{self.current_version}'}
+                headers={'User-Agent': f'Voxeprint/{self.current_version}'}
             )
             
             with urllib.request.urlopen(request, timeout=10) as response:
@@ -100,9 +100,16 @@ class AutoUpdateService:
             if not data:
                 logger.warning("AutoUpdateService", "No se encontraron releases en GitHub")
                 return None
-            
-            # Obtener el último release (primero en la lista)
-            latest_release = data[0]
+
+            # Buscar el último release estable (saltar prereleases si hay estables)
+            latest_release = None
+            for release in data:
+                if not release.get('prerelease', False):
+                    latest_release = release
+                    break
+            if not latest_release:
+                latest_release = data[0]
+                logger.info("AutoUpdateService", "Solo hay prereleases disponibles, usando la más reciente")
             
             # Extraer información
             latest_version = latest_release.get('tag_name', '').lstrip('v')
@@ -154,6 +161,17 @@ class AutoUpdateService:
             
             return update_info
             
+        except urllib.error.HTTPError as e:
+            if e.code == 403:
+                logger.error("AutoUpdateService",
+                    "Límite de GitHub API alcanzado (60 requests/hora). "
+                    "Los updates se reintentarán automáticamente más tarde.")
+            elif e.code == 404:
+                logger.error("AutoUpdateService",
+                    "URL de releases no encontrada. Verifica la configuración del repositorio.")
+            else:
+                logger.error("AutoUpdateService", f"Error HTTP {e.code} al verificar actualizaciones: {e}")
+            return None
         except urllib.error.URLError as e:
             logger.error("AutoUpdateService", f"Error de conexión al verificar actualizaciones: {e}")
             return None
@@ -214,16 +232,24 @@ class AutoUpdateService:
         """
         try:
             if not save_path:
-                # Guardar en carpeta temporal con nombre según SO
                 import tempfile
                 _, installer_name = get_installer_info()
                 save_path = Path(tempfile.gettempdir()) / installer_name
             
-            logger.info("AutoUpdateService", f"📥 Descargando actualización desde {download_url}")
+            logger.info("AutoUpdateService", f"Descargando actualización desde {download_url}")
             logger.info("AutoUpdateService", f"Guardando en {save_path}")
             
-            # Descargar archivo
-            urllib.request.urlretrieve(download_url, save_path)
+            # Descargar archivo con timeout (urlretrieve no soporta timeout)
+            req = urllib.request.Request(download_url, headers={
+                'User-Agent': f'Voxeprint/{self.current_version}'
+            })
+            with urllib.request.urlopen(req, timeout=120) as response:
+                with open(save_path, 'wb') as f:
+                    while True:
+                        chunk = response.read(8192)
+                        if not chunk:
+                            break
+                        f.write(chunk)
             
             logger.info("AutoUpdateService", f"Actualización descargada: {save_path}")
             return save_path
