@@ -22,6 +22,33 @@ from core.utils.logger import logger
 
 
 # ─────────────────────────────────────────────
+# Mapa de IDs comprimidos de PrusaSlicer → nombre legible
+# PrusaSlicer concatena palabras sin espacios en el campo printer_model
+# Ej: COREONEL → CORE One L,  MK4S → MK4S (ya legible)
+# ─────────────────────────────────────────────
+PRUSA_MODEL_ID_MAP: dict[str, str] = {
+    # CORE One
+    "COREONE":      "CORE One",
+    "COREONEHF":    "CORE One HF",
+    "COREONEMMU3":  "CORE One",       # CORE One con MMU3 (sin L)
+    "COREONEOAK":   "CORE One",       # CORE One variante OAK
+    "COREONEL":     "CORE One L",
+    "COREONELHF":   "CORE One L HF",
+    # MK series
+    "MK35":       "MK3.5",
+    "MK3S":       "MK3S",
+    "MK4":        "MK4",
+    "MK4S":       "MK4S",
+    "MK4SHF":     "MK4S HF",
+    # XL
+    "XL":         "XL",
+    "XL5T":       "XL 5T",
+    # MINI
+    "MINI":       "MINI",
+    "MINIIS":     "MINI IS",
+}
+
+# ─────────────────────────────────────────────
 # Tabla de normalización: OrcaSlicer/Slicer → Voxeprint FilamentType
 # ─────────────────────────────────────────────
 FILAMENT_NORMALIZATION_RULES = [
@@ -214,6 +241,7 @@ class GcodeData:
     # Campos multicolor (poblados cuando hay más de un slot activo)
     is_multicolor: bool = False
     filament_slots: List['FilamentSlotData'] = field(default_factory=list)
+    multifilament_system: str = ""  # Sistema multifilamento detectado (MMU3, MMU2, AMS, etc.)
 
 
 # ─────────────────────────────────────────────
@@ -1122,6 +1150,18 @@ def parse_file(file_path: str) -> GcodeData:
     else:
         data = GcodeData()
         data.file_name = path.name
+
+    # Normalizar modelo de impresora: separar sistema multifilamento del modelo base
+    # Ej: "COREONELMMU3" → printer_model="CORE One L", multifilament_system="MMU3"
+    if data.printer_model:
+        _mf_match = re.search(r'(MMU\d+S?|AMS(?:LITE)?)', data.printer_model, re.IGNORECASE)
+        if _mf_match:
+            data.multifilament_system = _mf_match.group(1).upper()
+            data.printer_model = data.printer_model[:_mf_match.start()].strip()
+        # Expandir ID comprimido de PrusaSlicer si hay coincidencia exacta
+        _key = data.printer_model.upper().replace(' ', '').replace('-', '').replace('_', '')
+        if _key in PRUSA_MODEL_ID_MAP:
+            data.printer_model = PRUSA_MODEL_ID_MAP[_key]
 
     # Normalizar tipo de filamento
     if data.filament_type:

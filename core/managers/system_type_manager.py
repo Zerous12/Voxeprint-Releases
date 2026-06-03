@@ -110,9 +110,9 @@ class SystemTypeManager:
             if screen_height is not None:
                 # Ajuste por altura para Win: más compacto en 720p/768p.
                 if screen_height <= 720:
-                    return "82"
+                    return "84"
                 if screen_height <= 768:
-                    return "89"
+                    return "90"
                 if screen_height <= 1200:    # Cubre 900p, 1080p (Full HD) y 1200p de forma segura
                     return "96"
                 if screen_height <= 1600:   # Cubre 1440p (2K) y pantallas intermedias
@@ -125,9 +125,15 @@ class SystemTypeManager:
             screen_height = SystemTypeManager._get_linux_screen_height()
             if screen_height is not None:
                 if screen_height <= 720:
-                    return "82"
+                    return "84"
                 if screen_height <= 768:
-                    return "89"
+                    return "90"
+                if screen_height <= 1200:    # Cubre 900p, 1080p (Full HD) y 1200p de forma segura
+                    return "96"
+                if screen_height <= 1600:   # Cubre 1440p (2K) y pantallas intermedias
+                    return "120"
+                if screen_height >= 2160:   # Cubre 4K UHD en adelante
+                    return "140"
             return None
 
         return None

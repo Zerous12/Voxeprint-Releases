@@ -245,7 +245,7 @@ class SystemSettingsPresenter(QObject):
             # Configuraciones del PDF de Presupuesto
             pdf_cfg = self.quote_config_manager.get_pdf_settings()
             settings['pdf_primary_color'] = pdf_cfg.get('primary_color', '')
-            settings['pdf_display_mode']  = pdf_cfg.get('display_mode', 'detailed')
+            settings['pdf_display_mode']  = pdf_cfg.get('display_mode', 'summary')
             settings['pdf_summary_label'] = pdf_cfg.get('summary_label', 'Servicio de Impresión 3D')
 
         except Exception as e:

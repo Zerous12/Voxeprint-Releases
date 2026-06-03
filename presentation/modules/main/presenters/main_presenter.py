@@ -686,11 +686,14 @@ class MainPresenter(QObject):
 
         # Match exacto del modelo
         if gcode_lower == p_model or gcode_lower == p_name:
-            return 100
+            return 200
 
         # El gcode está contenido en nombre/modelo o viceversa
         if gcode_lower in combined or p_model in gcode_lower:
             score += 60
+            # Bonus de especificidad: modelos más largos (más específicos) puntúan más alto
+            # Evita que "CORE One" empate con "CORE One L" cuando el gcode es para el L
+            score += len(p_model)
 
         # Match por tokens significativos
         p_tokens = set(combined.replace('-', ' ').replace('_', ' ').split())
@@ -2437,25 +2440,29 @@ class MainPresenter(QObject):
 
                 if manual:
                     # Construir mensaje de éxito con información de anticipo y post-procesado si aplica
-                    success_message = f"Presupuesto calculado correctamente.\nTotal a pagar: {CurrencyHelper.format_with_current_currency(result['total_to_pay'] or 0)}"
+                    success_message = (
+                        tr(I18N.Quote.MSG_CALC_SUCCESS)
+                        .replace("{total}", CurrencyHelper.format_with_current_currency(result['total_to_pay'] or 0))
+                    )
                     
                     # Agregar información de post-procesado si está habilitado
                     if result.get('post_enabled', False) and result.get('post_amount', 0) > 0:
                         subtotal_before_post = result.get('subtotal_before_post', result['total_to_pay'] - result['post_amount'])
                         success_message += (
-                            f"\n\nIncluye post-procesado:"
-                            f"\nSubtotal: {CurrencyHelper.format_with_current_currency(subtotal_before_post)}"
-                            f"\nPost-procesado: {CurrencyHelper.format_with_current_currency(result['post_amount'])}"
+                            tr(I18N.Quote.MSG_CALC_POST)
+                            .replace("{subtotal}", CurrencyHelper.format_with_current_currency(subtotal_before_post))
+                            .replace("{post}", CurrencyHelper.format_with_current_currency(result['post_amount']))
                         )
                     
                     if result['advance_enabled']:
                         success_message += (
-                            f"\n\nAnticipo requerido ({result['advance_percentage']}%): "
-                            f"{CurrencyHelper.format_with_current_currency(result['advance_amount'])}\n"
-                            f"Saldo restante: {CurrencyHelper.format_with_current_currency(result['remaining_amount'])}"
+                            tr(I18N.Quote.MSG_CALC_ADVANCE)
+                            .replace("{pct}", str(result['advance_percentage']))
+                            .replace("{advance}", CurrencyHelper.format_with_current_currency(result['advance_amount']))
+                            .replace("{remaining}", CurrencyHelper.format_with_current_currency(result['remaining_amount']))
                         )
                     
-                    self.view.show_success_message("Cálculo Completado", success_message)
+                    self.view.show_success_message(tr(I18N.Quote.MSG_CALC_SUCCESS_TITLE), success_message)
                 return
 
             # Caso inesperado

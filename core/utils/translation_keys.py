@@ -1009,6 +1009,10 @@ class I18N:
         MSG_OUTDATED_SAVE = "Quote.msg_outdated_save"
         MSG_CALC_IN_PROGRESS_TITLE = "Quote.msg_calc_in_progress_title"
         MSG_CALC_IN_PROGRESS = "Quote.msg_calc_in_progress"
+        MSG_CALC_SUCCESS_TITLE = "Quote.msg_calc_success_title"
+        MSG_CALC_SUCCESS = "Quote.msg_calc_success"
+        MSG_CALC_POST = "Quote.msg_calc_post"
+        MSG_CALC_ADVANCE = "Quote.msg_calc_advance"
 
     class QuoteNote:
         # Dialog buttons & feedback
@@ -1307,6 +1311,8 @@ class I18N:
         MSG_SAVE_ERROR_TEXT = "SystemSettings.msg_save_error_text"
         MSG_SAVE_CRITICAL_TEXT = "SystemSettings.msg_save_critical_text"
         CHECKBOX_COMMISSION_SHIELD = "SystemSettings.checkbox_commission_shield"
+        CHECKBOX_COMMISSION_SHIELD_DYNAMIC = "SystemSettings.checkbox_commission_shield_dynamic"
+        TOOLTIP_COMMISSION_SHIELD = "SystemSettings.tooltip_commission_shield"
         CHECKBOX_AUTO_BACKUP = "SystemSettings.checkbox_auto_backup"
         # Language / Region tab
         TAB_LANGUAGE = "SystemSettings.tab_language"

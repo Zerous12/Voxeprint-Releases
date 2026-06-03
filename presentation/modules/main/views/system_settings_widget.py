@@ -512,6 +512,9 @@ class SystemSettingsWidget(QWidget):
                     current_currency = CurrencyHelper.get_current_currency()
                     decimals = CurrencyHelper.get_decimals(current_currency)
                     field.setDecimals(decimals)
+                elif key == "tax_rate":
+                    field.setDecimals(1)
+                    field.setSingleStep(0.5)
                 else:
                     field.setDecimals(0)
 
@@ -1772,10 +1775,16 @@ class SystemSettingsWidget(QWidget):
     def _update_tax_shield_label(self, tax_rate: float):
         """Actualiza el texto y tooltip del checkbox de blindaje según el IVA configurado"""
         multiplier = 1 + (tax_rate / 100)
-        self.commission_tax_shield.setText(f"Aplicar ×{multiplier:.2f} a la comisión deseada")
+        multiplier_str = f"{multiplier:.2f}"
+        tax_rate_str = f"{tax_rate:.1f}"
+        self.commission_tax_shield.setText(
+            tr(I18N.Systemsettings.CHECKBOX_COMMISSION_SHIELD_DYNAMIC)
+            .replace("{multiplier}", multiplier_str)
+        )
         tooltip = (
-            f"Precio Final = Costo Materiales + (Comisión Deseada × {multiplier:.2f})\n"
-            f"Con IVA del {tax_rate:.0f}%, la comisión cobrada queda íntegra tras el impuesto."
+            tr(I18N.Systemsettings.TOOLTIP_COMMISSION_SHIELD)
+            .replace("{multiplier}", multiplier_str)
+            .replace("{tax_rate}", tax_rate_str)
         )
         self.commission_tax_shield.setToolTip(tooltip)
         self.lbl_shield.setToolTip(tooltip)
