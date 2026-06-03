@@ -99,7 +99,7 @@ class FilamentInventoryPresenter(QObject):
         
         # Configurar textEdit inicial
         self.ui.textEdit_details_filament.setHtml(
-            "Seleccione un filamento de la tabla para ver sus detalles aquí."
+            tr(I18N.Filament.MSG_SELECT_TO_VIEW)
         )
         
         # Configurar estado inicial de botones
