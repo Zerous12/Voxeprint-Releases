@@ -29,14 +29,16 @@ Permission is granted to:
 
 The following are **prohibited** without explicit written permission from the author:
 
--  Selling the software or derivatives
--  Including it in paid products or services
--  Offering it as SaaS or a monetized platform
--  Using it as the basis of a direct or indirect commercial product
--  Rebranding or white-labeling it as a proprietary product
--  Monetizing access, support, or features based on this software
+- Selling the software or its derivatives.
+- Including the software in paid products or services.
+- Offering the software as SaaS (Software as a Service) or on a monetized platform.
+- Rebranding or white-labeling the software as a proprietary product.
+- Monetizing access, support, or features based on this software.
 
-> **"Commercial use"** includes any use whose primary purpose is to generate revenue, directly or indirectly.
+### Permitted Exception for Makers and Small Shops
+Individual makers and small businesses are **expressly permitted** to use VoxePrint as a tool to calculate costs, manage inventory, and generate quotes for their own production and sales (e.g., Etsy shops, local 3D printing services).
+
+> **Clarification:** The "Commercial Use" restriction is intended to prevent third parties from selling the software itself or building a paid service based on it. It is **not** intended to limit your productivity or your ability to use the app to run your own making business.
 
 ---
 
