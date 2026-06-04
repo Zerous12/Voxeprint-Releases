@@ -335,15 +335,28 @@ class UpdateDialog(QDialog):
         """Instala la actualización descargada"""
         try:
             if self.installer_path and self.installer_path.exists():
+                # Avisar al usuario que la app quedará en espera mientras pkexec/apt corren
+                self.status_label.setText("Instalando... Por favor autentícate en el diálogo del sistema.")
+                self.status_label.setVisible(True)
+                self.btn_download.setEnabled(False)
+                self.btn_close.setEnabled(False)
+                # Forzar repintado antes de que subprocess.run() bloquee el hilo principal
+                from PySide6.QtWidgets import QApplication as _QApp
+                _QApp.processEvents()
+
                 # Usar el servicio de actualización para instalar
-                success = UPDATE_SERVICE.install_update(self.installer_path)
+                success = UPDATE_SERVICE.install_update(
+                    self.installer_path,
+                    new_version=self.update_info.get('version')
+                )
                 
                 if success:
                     # Cerrar aplicación
-                    from PySide6.QtWidgets import QApplication
-                    QApplication.quit()
+                    _QApp.quit()
                 else:
                     self._show_error(tr(I18N.Update.MSG_INSTALLER_FAILED))
+                    self.btn_close.setEnabled(True)
+                    self.status_label.setVisible(False)
             else:
                 self._show_error(tr(I18N.Update.MSG_INSTALLER_NOT_FOUND))
                 

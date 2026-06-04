@@ -1,22 +1,25 @@
-﻿VoxePrint v1.2.8 - Build 136 (31.05.2026)
+﻿VoxePrint v1.2.8 - Build 136 (04.06.2026)
 ===============================================
-+ Sistema: Soporte mejorado para distribuciones Linux
-+ Sistema: Internacionalización completa de cuadros de diálogo, mensajes de error y notificaciones
-+ Visor PDF: Nombres de archivo localizados para descarga de PDFs (Presupuesto/Quote, Reporte/Report) y Notas de Precios (nota/note)
-+ Sistema: Selector de estilo nativo del sistema en Linux (GTK, Breeze) con fallback a Fusion
-+ Sistema: Flags QtWebEngine para Linux: QTWEBENGINE_CHROMIUM_FLAGS con --no-sandbox
-+ Sistema: Mensajes de compatibilidad del sistema ahora traducibles (Windows 7/XP, macOS antiguo)
-- Fixed: Mensajes de error del sistema mostraban texto sin traducir
-- Fixed: Error al eliminar presupuesto mostraba texto sin traducir
-- Fixed: Visor PDF usaba nombre fijo "Presupuesto_" sin distinguir entre presupuesto y reporte
-- Fixed: Nota de Precios generaba archivo con prefijo "nota_" sin respetar el idioma
-- Fixed: Crash del generador de PDF en Linux por configuración de ruta de recursos
-- Fixed: Visor PDF no se abría correctamente en Linux por rutas de recursos
-- Fixed: Control de scroll inconsistente en vistas de inventario
-- Fixed: Tema Fusion forzado en Linux ignorando el estilo nativo del escritorio
-- Fixed: Configuración de inicio en Preferencias mostraba texto sin traducir
-- Fixed: Error en Shortcuts al cambiar de tab en el main
-- Fixed: Error de pintado en los fondos de algunos dialogos por el estilo Fusion en linux
++ Sistema: Mejor compatibilidad y apariencia visual en distribuciones Linux
++ Sistema: Traducción completa de todos los mensajes, errores y notificaciones de la aplicación
++ Sistema: Los mensajes informativos ahora se muestran correctamente en el idioma del sistema
++ Visor PDF: Nombres de archivos automáticos y traducidos al guardar presupuestos o reportes
++ Interfaz: Ajuste automático del tamaño de la aplicación según la pantalla (desde 720p hasta 4K)
++ Interfaz: Detección automática de idioma y región al iniciar la aplicación por primera vez
++ Interfaz: Los documentos y notas de precios se crean automáticamente en el idioma configurado
++ Interfaz: Diseño de configuración inicial más limpio, sin datos de ejemplo ficticios
++ G-Code: Soporte para nuevos formatos de archivos (.bgcode) y detección mejorada de sistemas de varios colores (MMU/AMS)
++ G-Code: Nombres de impresoras más claros y legibles al cargar archivos de PrusaSlicer
++ Actualizaciones: Proceso de descarga y actualización más seguro y fiable para todos los formatos (AppImage, .deb, .rpm)
++ Actualizaciones: Mejores indicadores visuales y mensajes durante la instalación de nuevas versiones
++ Filamentos: Las descripciones y detalles de materiales ahora respetan el idioma activo
+- Fixed: Se corrigieron textos que aparecían sin traducir en varios módulos del sistema
+- Fixed: Se solucionaron errores que impedían abrir o generar documentos PDF en Linux
+- Fixed: Se corrigió el bloqueo visual al autenticar instalaciones en sistemas Linux
+- Fixed: Mejoras en la detección de resolución de pantalla y tamaño de letra en Windows y Linux
+- Fixed: Se corrigieron errores al identificar modelos de impresora específicos desde archivos G-code
+- Fixed: El modo de visualización de los presupuestos ahora se inicia correctamente en instalaciones nuevas
+- Fixed: Mejoras en la estabilidad visual y comportamiento de las tablas del inventario
 
 
 VoxePrint v1.2.4 - Build 132 (23.05.2026)
