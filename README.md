@@ -1,8 +1,17 @@
 # VoxePrint
 
+<div align="center">
+	<img width="847" height="585" alt="Diseño sin título (2)-Photoroom" src="https://github.com/user-attachments/assets/183bf109-9491-4926-952a-6017696d4017" />
+</div>
+
 **Calculator and management system for 3D printing**
 
 Desktop software for 3D printing enthusiasts and small businesses. Generate quotes, manage clients, filaments and printers — all from a local app with no subscriptions or cloud required.
+
+---
+## Download
+
+👉 [Download the latest release](https://github.com/Zerous12/Voxeprint---3DPrint-Quote-Generator/releases/latest)
 
 ---
 
@@ -40,7 +49,21 @@ python app.py
 
 ## Screenshots
 
-*(coming soon)*
+*Main view (light theme, 720p optimized)*
+
+<img width="700" alt="Main view light theme" src="https://github.com/user-attachments/assets/525909f1-9142-42af-a355-73aa125b6457" />
+
+*Minimalist dark theme*
+
+<img width="700" alt="Dark theme minimalist" src="https://github.com/user-attachments/assets/3bc2316f-e07a-4ae6-9602-f2148c85c46e" />
+
+*Professional quote PDF export example*
+
+<img width="700" alt="Quote PDF export example" src="https://github.com/user-attachments/assets/6f3a76d0-f993-4313-a26a-cdb96dacca6d" />
+
+*Quote Price image export (for informal estimates and quick sharing via WhatsApp)*
+
+<img width="700" alt="Quote Price image export" src="https://github.com/user-attachments/assets/88793d64-4492-4967-9c42-a4953e13fd84" />
 
 ---
 
@@ -52,9 +75,9 @@ This project is licensed under the **VoxePrint Community License (VCL) 1.0**.
 - ✅ Free to use for personal, educational and community purposes
 - ✅ You can modify and redistribute it
 - ✅ Forks are allowed with attribution
-- ❌ Commercial use, resale, SaaS, white-labeling or monetization **without written permission** is prohibited
+- ❌ Selling the software itself, white-labeling it, or offering it as a paid product/SaaS **without written permission** is prohibited
 
-See the full [LICENSE](LICENSE) file for details.
+See the full [LICENSE](LICENSE.md) file for details.
 
 ---
 
@@ -62,7 +85,7 @@ See the full [LICENSE](LICENSE) file for details.
 
 If you want to use VoxePrint in a commercial context, integrate it into a paid product, or offer services based on it, contact the author for a commercial license agreement.
 
-📧 Contact: *(add your contact email or GitHub Discussions link here)*
+📧 Contact: *Zerous_12@hotmail.com*
 
 ---
 
@@ -75,11 +98,19 @@ You may **not** use the name "VoxePrint" for commercial forks, derivative produc
 
 ---
 
+## Support the Project
+
+If you wish to support the development, donation details and documentation are available in the "Support the Project" section inside the application.
+
+> **Note:** Due to Paraguayan economic policies, direct transfers to Paraguayan accounts via platforms like BuyMeACoffee are restricted. That's why only local and alternative donation methods are provided.
+
+---
+
 ## Contributing
 
 Contributions are welcome for bug fixes, translations and community improvements.
 
-By contributing, you agree that your contributions will be licensed under the same [VCL 1.0](LICENSE).
+By contributing, you agree that your contributions will be licensed under the same [VCL 1.0](LICENSE.md).
 
 Please open an issue before submitting large changes.
 
