@@ -75,7 +75,7 @@ This project is licensed under the **VoxePrint Community License (VCL) 1.0**.
 - ✅ Free to use for personal, educational and community purposes
 - ✅ You can modify and redistribute it
 - ✅ Forks are allowed with attribution
-- ❌ Commercial use, resale, SaaS, white-labeling or monetization **without written permission** is prohibited
+- ❌ Selling the software itself, white-labeling it, or offering it as a paid product/SaaS **without written permission** is prohibited
 
 See the full [LICENSE](LICENSE.md) file for details.
 
