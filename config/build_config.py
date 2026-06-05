@@ -20,8 +20,8 @@ class ApplicationParameters:
     display_name: str = "Voxeprint - Tu Asistente generador de Cotizaciones"
     description: str = "Calculadora profesional para impresión 3D"
     version: str = "1.2.8"
-    build_number: int = 136
-    release_date: str = "2026.05.31"
+    build_number: int = 140
+    release_date: str = "2026.06.04"
     
     # Información del desarrollador/organización
     author: str = "Richard Mequert"
@@ -30,9 +30,9 @@ class ApplicationParameters:
     github_profile: str = "https://github.com/Zerous12"
     
     # Licencia y copyright
-    license: str = "VoxePrint Community License (VCL) 1.0"
+    license: str = "Voxeprint Community License (VCL) 1.0"
     license_short: str = "Source-available · Free for community use"
-    copyright: str = f"© 2025–2026 Richard Mequert — VoxePrint"
+    copyright: str = f"© 2025–2026 Richard Mequert — Voxeprint"
 
 
 @dataclass(frozen=True)
